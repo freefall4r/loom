@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="LOOM">
+  <title>LOOM</title>
+  <!-- Simplified weave that still reads at 16px: one warp + one weft crossing,
+       forming an abstract L. Thicker strokes for small-size clarity. -->
+  <g fill="none" stroke-linecap="round">
+    <!-- terracotta warp (vertical stem) -->
+    <path d="M11 6 V25" stroke="#C75B39" stroke-width="4.5"/>
+    <!-- teal weft (horizontal foot), woven across -->
+    <path d="M8 24 H25" stroke="#1F4E4A" stroke-width="4.5"/>
+  </g>
+  <!-- gold knot at the interlock -->
+  <circle cx="11" cy="24" r="2.4" fill="#B8884B"/>
+</svg>

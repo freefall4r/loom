@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace USERNAME after creating the GitHub repo (see DEPLOY.md).
+Sitemap: https://USERNAME.github.io/loom/sitemap.xml

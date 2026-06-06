@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — LOOM</title>
+  <meta name="description" content="Selected work from LOOM — real products and sites, hand-built: premium brand websites, an Arabic-first meditation app, automation engines, and AI agent teams.">
+  <meta name="theme-color" content="#F7F2E9">
+  <meta property="og:title" content="LOOM — We weave technology">
+  <meta property="og:description" content="Websites, apps & AI, woven by hand. A digital craft studio.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/loom.css">
+
+  <!-- Page-local styling for the case-study "visual" placeholders only.
+       Uses brand tokens from loom.css; no new global classes. -->
+  <style>
+    /* ---- Work page layout helpers ---- */
+    .work-head { text-align: center; }
+    .work-head .lede { margin-left: auto; margin-right: auto; max-width: 62ch; }
+
+    .case { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; margin-top: clamp(2.5rem, 6vw, 4.5rem); }
+    @media (min-width: 880px) {
+      .case { grid-template-columns: 1.05fr 1fr; }
+      .case--flip .case__visual { order: 2; }
+      .case--flip .case__body   { order: 1; }
+    }
+
+    .case__what { display: inline-block; margin: 0 0 .35rem; font-weight: 500; }
+    .case__story { color: var(--ink-soft); max-width: 56ch; }
+    .case__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0 1.25rem; }
+    .case__outcome {
+      margin: 0; padding-top: 1rem; border-top: 1px solid var(--line);
+      font-family: 'Fraunces', Georgia, serif; font-style: italic;
+      font-size: 1.1rem; line-height: 1.5; color: var(--ink);
+    }
+    .section--ink .case__story { color: rgba(247,242,233,.78); }
+    .section--ink .case__outcome { color: var(--paper); border-top-color: rgba(247,242,233,.18); }
+    .case__link {
+      display: inline-flex; align-items: center; gap: .45rem;
+      margin-top: 1.1rem; font-weight: 500; color: var(--thread);
+      text-decoration: none; border-bottom: 1px solid transparent;
+    }
+    .case__link:hover { border-bottom-color: var(--thread); }
+    .case__link svg { width: 15px; height: 15px; }
+
+    /* ---- Woven-thread visual placeholders (intentional, premium) ---- */
+    .visual {
+      position: relative; aspect-ratio: 4 / 3; border-radius: 14px;
+      overflow: hidden; box-shadow: var(--shadow);
+      border: 1px solid rgba(28,24,20,.06);
+      display: flex; align-items: flex-end; padding: clamp(1.25rem, 3vw, 2rem);
+    }
+    .visual svg.weave { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .visual__label {
+      position: relative; z-index: 2;
+      font-family: 'Fraunces', Georgia, serif; font-weight: 500;
+      line-height: 1.05; letter-spacing: -0.01em;
+      font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+      color: var(--paper);
+    }
+    .visual__label small {
+      display: block; margin-top: .5rem;
+      font-family: 'Inter', system-ui, sans-serif; font-weight: 500;
+      font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(247,242,233,.72);
+    }
+    .visual__ar { font-feature-settings: normal; }
+
+    /* per-project gradient grounds from the brand palette */
+    .visual--plexus { background: linear-gradient(135deg, #C75B39 0%, #8f3c23 100%); }
+    .visual--garden { background: linear-gradient(135deg, #1F4E4A 0%, #123330 100%); }
+    .visual--huroofi{ background: linear-gradient(135deg, #B8884B 0%, #8a5f2c 100%); }
+    .visual--grove  { background: linear-gradient(135deg, #2c5d3a 0%, #1c3d27 60%, #C75B39 160%); }
+    .visual--agents { background: linear-gradient(135deg, #1C1814 0%, #2a2017 55%, #C75B39 220%); }
+
+    /* approach strip */
+    .approach-grid { margin-top: clamp(2rem, 4vw, 3rem); }
+    .approach .card h3 { margin: 0 0 .5rem; }
+    .approach .card p { margin: 0; color: var(--ink-soft); }
+
+    .cta-close { text-align: center; }
+    .cta-close .lede { margin-left: auto; margin-right: auto; max-width: 48ch; }
+    .cta-close__btns { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin-top: 1.75rem; }
+  </style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav__inner wrap">
+    <a class="nav__logo" href="index.html" aria-label="LOOM home">
+      <img src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span>LOOM</span>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html" aria-current="page">Work</a>
+      <a href="about.html">Studio</a>
+      <a class="btn btn--thread nav__cta" href="about.html#contact">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ PAGE HEADER ============ -->
+  <section class="section">
+    <div class="wrap work-head reveal">
+      <p class="eyebrow">Selected work</p>
+      <h1 class="display">Things we&rsquo;ve woven</h1>
+      <p class="lede">Real products and sites, hand-built &mdash; from premium brand
+        websites to Arabic-first apps and automation engines. Every thread placed
+        on purpose. Nothing here was spun from a template.</p>
+    </div>
+  </section>
+
+  <!-- ============ CASE: PLEXUS WORKSHOP ============ -->
+  <section class="section">
+    <div class="wrap">
+      <article class="case reveal">
+        <div class="case__visual">
+          <div class="visual visual--plexus">
+            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <pattern id="warp-plexus" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M0 0 H40 M0 13 H40 M0 27 H40" stroke="rgba(247,242,233,.16)" stroke-width="1.4"/>
+                  <path d="M0 0 V40 M13 0 V40 M27 0 V40" stroke="rgba(28,24,20,.16)" stroke-width="1.4"/>
+                </pattern>
+              </defs>
+              <rect width="400" height="300" fill="url(#warp-plexus)"/>
+            </svg>
+            <span class="visual__label">Plexus<br>Workshop<small>Premium brand site</small></span>
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Brand website</p>
+          <h2>Plexus Workshop</h2>
+          <span class="case__what muted">A premium woodworking brand, brought online.</span>
+          <p class="case__story">We turned a real wood workshop into a recognized online
+            brand &mdash; a fast, bilingual-feeling site with custom product renders and a calm,
+            crafted feel that matches the work it sells. Built in Next.js and deployed on Vercel,
+            it&rsquo;s designed to win trust and pull in B2B leads, not just look pretty.</p>
+          <div class="case__tags">
+            <span class="pill">Next.js</span>
+            <span class="pill">Vercel</span>
+            <span class="pill">Custom product renders</span>
+            <span class="pill">Bilingual EN/AR</span>
+            <span class="pill">Brand &amp; design</span>
+          </div>
+          <p class="case__outcome">Workshop to web brand &mdash; a site built to attract clients,
+            not just exist.</p>
+          <a class="case__link" href="https://www.plexusworkshop.com" target="_blank" rel="noopener">
+            Visit plexusworkshop.com
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CASE: INNER GARDEN ============ -->
+  <section class="section section--ink">
+    <div class="wrap">
+      <article class="case case--flip reveal">
+        <div class="case__visual">
+          <div class="visual visual--garden">
+            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <radialGradient id="breath-garden" cx="50%" cy="42%" r="55%">
+                  <stop offset="0%" stop-color="rgba(184,136,75,.45)"/>
+                  <stop offset="60%" stop-color="rgba(184,136,75,0)"/>
+                </radialGradient>
+              </defs>
+              <rect width="400" height="300" fill="url(#breath-garden)"/>
+              <circle cx="200" cy="128" r="34" fill="none" stroke="rgba(247,242,233,.35)" stroke-width="1.2"/>
+              <circle cx="200" cy="128" r="58" fill="none" stroke="rgba(247,242,233,.22)" stroke-width="1.2"/>
+              <circle cx="200" cy="128" r="84" fill="none" stroke="rgba(247,242,233,.13)" stroke-width="1.2"/>
+              <g stroke="rgba(247,242,233,.10)" stroke-width="1">
+                <path d="M0 230 H400 M0 250 H400 M0 270 H400"/>
+              </g>
+            </svg>
+            <span class="visual__label visual__ar" lang="ar" dir="rtl">بُستان الرُّوح<small dir="ltr">Inner Garden &middot; breathe</small></span>
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Web app &middot; Arabic-first</p>
+          <h2>Inner Garden &middot; بُستان الرُّوح</h2>
+          <span class="case__what muted">An Arabic-first breathing &amp; meditation app.</span>
+          <p class="case__story">A calming, right-to-left (RTL) web app for breathing and
+            meditation &mdash; self-contained, fast, and gentle to use. We shaped a freemium
+            experience that feels rooted in Arabic culture rather than translated into it.
+            It shows our range: from hard utility to something quiet and emotional.</p>
+          <div class="case__tags">
+            <span class="pill">Arabic-first RTL</span>
+            <span class="pill">Calm UX</span>
+            <span class="pill">Freemium</span>
+            <span class="pill">Self-contained</span>
+            <span class="pill">Performance</span>
+          </div>
+          <p class="case__outcome">Proof that technology can feel like a deep breath, not a feed.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CASE: HUROOFI ============ -->
+  <section class="section">
+    <div class="wrap">
+      <article class="case reveal">
+        <div class="case__visual">
+          <div class="visual visual--huroofi">
+            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g stroke="rgba(28,24,20,.18)" stroke-width="1.2" fill="none">
+                <rect x="40" y="34" width="120" height="160" rx="6"/>
+                <rect x="58" y="52" width="120" height="160" rx="6"/>
+                <rect x="76" y="70" width="120" height="160" rx="6"/>
+              </g>
+              <g stroke="rgba(247,242,233,.5)" stroke-width="1.4" fill="none">
+                <path d="M96 110 h80 M96 130 h80 M96 150 h54"/>
+              </g>
+              <text x="250" y="150" font-family="Fraunces, serif" font-size="120" fill="rgba(247,242,233,.5)" text-anchor="middle" dir="rtl">أ</text>
+            </svg>
+            <span class="visual__label">Huroofi<small>Arabic printables factory</small></span>
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Automation &middot; productized system</p>
+          <h2>Huroofi</h2>
+          <span class="case__what muted">An Arabic educational printables &ldquo;factory.&rdquo;</span>
+          <p class="case__story">A Node engine driving headless Chrome to render beautiful
+            Arabic HTML into print-ready PDFs &mdash; at scale, on demand. The hard parts were
+            Arabic typography that stays correct and a pipeline that produces clean, repeatable
+            output every time. It&rsquo;s automation and craft in the same machine: a product that
+            makes more products.</p>
+          <div class="case__tags">
+            <span class="pill">Node.js</span>
+            <span class="pill">Headless Chrome</span>
+            <span class="pill">HTML&rarr;PDF pipeline</span>
+            <span class="pill">Arabic typography</span>
+            <span class="pill">Productized system</span>
+          </div>
+          <p class="case__outcome">One engine, endless print-ready pages &mdash; the kind of leverage we build for clients.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CASE: THE GROVE ============ -->
+  <section class="section section--ink">
+    <div class="wrap">
+      <article class="case case--flip reveal">
+        <div class="case__visual">
+          <div class="visual visual--grove">
+            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <pattern id="warp-grove" width="48" height="48" patternUnits="userSpaceOnUse">
+                  <path d="M0 12 H48 M0 28 H48" stroke="rgba(247,242,233,.12)" stroke-width="1.2"/>
+                  <path d="M12 0 V48 M28 0 V48" stroke="rgba(247,242,233,.08)" stroke-width="1.2"/>
+                </pattern>
+              </defs>
+              <rect width="400" height="300" fill="url(#warp-grove)"/>
+              <g stroke="rgba(247,242,233,.4)" stroke-width="1.4" fill="none">
+                <path d="M120 210 V120 M120 150 l-26 -20 M120 168 l28 -22 M120 130 l-22 -18"/>
+                <path d="M270 210 V128 M270 158 l26 -22 M270 174 l-26 -20"/>
+              </g>
+            </svg>
+            <span class="visual__label">The Grove<small>Hospitality concept site</small></span>
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Concept website &middot; bilingual</p>
+          <h2>The Grove</h2>
+          <span class="case__what muted">A recent project for a local hospitality brand.</span>
+          <p class="case__story">A bilingual concept site crafted to help a local brand present
+            itself beautifully online &mdash; warm, spacious, and on-brand from the first scroll.
+            We built it to show, not tell: what their space could feel like on the web. A study in
+            using design to make a place desirable before a single word is read.</p>
+          <div class="case__tags">
+            <span class="pill">Bilingual EN/AR</span>
+            <span class="pill">Hospitality</span>
+            <span class="pill">Concept &amp; design</span>
+            <span class="pill">Editorial layout</span>
+          </div>
+          <p class="case__outcome">A space made desirable on the web &mdash; a site that does the selling.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CASE: AI AGENT TEAMS (internal capability) ============ -->
+  <section class="section">
+    <div class="wrap">
+      <article class="case reveal">
+        <div class="case__visual">
+          <div class="visual visual--agents">
+            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g stroke="rgba(199,91,57,.55)" stroke-width="1.3" fill="none">
+                <path d="M200 60 L110 150 M200 60 L290 150 M200 60 L200 150"/>
+                <path d="M110 150 L75 230 M110 150 L150 230 M290 150 L250 230 M290 150 L325 230 M200 150 L200 230"/>
+              </g>
+              <g fill="rgba(247,242,233,.85)">
+                <circle cx="200" cy="60" r="7"/>
+                <circle cx="110" cy="150" r="5"/><circle cx="200" cy="150" r="5"/><circle cx="290" cy="150" r="5"/>
+                <circle cx="75" cy="230" r="4"/><circle cx="150" cy="230" r="4"/><circle cx="200" cy="230" r="4"/><circle cx="250" cy="230" r="4"/><circle cx="325" cy="230" r="4"/>
+              </g>
+            </svg>
+            <span class="visual__label">AI Agent<br>Teams<small>The weavers behind the work</small></span>
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Internal capability</p>
+          <h2>AI Agent Teams</h2>
+          <span class="case__what muted">Orchestrated fleets of AI agents &mdash; our own edge.</span>
+          <p class="case__story">Loom builds with teams of AI agents working in parallel &mdash; our
+            &ldquo;weavers&rdquo; &mdash; researching, drafting, and assembling so we ship faster without
+            cutting corners. It&rsquo;s how this very site was woven. And it&rsquo;s the same capability
+            we deploy for clients: support bots, content engines, and ops automation that quietly do real work.</p>
+          <div class="case__tags">
+            <span class="pill">Agent orchestration</span>
+            <span class="pill">Parallel workflows</span>
+            <span class="pill">Support &amp; content bots</span>
+            <span class="pill">Ops automation</span>
+          </div>
+          <p class="case__outcome">We weave with AI &mdash; then hand-finish every thread.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ WHAT CLIENTS GET ============ -->
+  <section class="section section--ink approach">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;">
+        <p class="eyebrow">What clients get</p>
+        <h2>Crafted, not generated</h2>
+        <p class="lede" style="margin-inline:auto;max-width:54ch;">
+          Every project above was built by hand with intent. Here&rsquo;s what that means in practice.</p>
+      </div>
+      <div class="grid grid-3 approach-grid reveal">
+        <div class="card">
+          <h3>Built to a brief, not a template</h3>
+          <p>No bloated themes or recycled layouts. We start from your goal and weave the
+            structure to fit it &mdash; so the result feels like you, not like everyone else.</p>
+        </div>
+        <div class="card">
+          <h3>Fast, accessible, bilingual-ready</h3>
+          <p>Clean code that loads quickly, works on every screen, reads well in English and
+            Arabic, and stays usable for everyone. Quality you can feel before you can name it.</p>
+        </div>
+        <div class="card">
+          <h3>AI-accelerated, hand-finished</h3>
+          <p>Our agent teams do the heavy lifting so we move fast &mdash; then a human checks every
+            detail. You get the speed of automation with the care of a workshop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING CTA ============ -->
+  <section class="section">
+    <div class="wrap cta-close reveal">
+      <p class="eyebrow">Your project next</p>
+      <h2>Have something to build?</h2>
+      <p class="lede">Tell us what you&rsquo;re making. We&rsquo;ll tell you honestly how we&rsquo;d
+        weave it &mdash; and whether we&rsquo;re the right studio for it.</p>
+      <div class="cta-close__btns">
+        <a class="btn btn--thread" href="about.html#contact">Start a project</a>
+        <a class="btn btn--ghost" href="mailto:mofakhori@gmail.com">mofakhori@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer section--ink">
+  <div class="footer__inner wrap">
+    <div class="footer__brand">
+      <span class="footer__logo">LOOM</span>
+      <p class="muted">We weave technology — websites, apps & AI, woven by hand.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html">Work</a>
+      <a href="about.html">Studio</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="footer__contact">
+      <a href="mailto:mofakhori@gmail.com">mofakhori@gmail.com</a>
+      <p class="muted">© <span data-year>2026</span> LOOM. Crafted, not generated.</p>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/loom.js" defer></script>
+</body>
+</html>

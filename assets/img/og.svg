@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="LOOM — We weave technology">
+  <title>LOOM — We weave technology</title>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="0%" r="85%">
+      <stop offset="0%" stop-color="#B8884B" stop-opacity="0.14"/>
+      <stop offset="55%" stop-color="#B8884B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="thr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C75B39"/>
+      <stop offset="100%" stop-color="#B8884B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- parchment -->
+  <rect width="1200" height="630" fill="#F7F2E9"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- woven thread field: warp (vertical) + weft (horizontal) crossing over/under -->
+  <g opacity="0.5" fill="none" stroke-linecap="round">
+    <!-- weft (teal, under) -->
+    <path d="M0 120 Q300 95 600 120 T1200 120" stroke="#1F4E4A" stroke-width="2.4" opacity=".5"/>
+    <path d="M0 250 Q300 280 600 255 T1200 255" stroke="#1F4E4A" stroke-width="2.4" opacity=".45"/>
+    <path d="M0 400 Q300 372 600 402 T1200 398" stroke="#1F4E4A" stroke-width="2.4" opacity=".4"/>
+    <path d="M0 540 Q300 565 600 538 T1200 545" stroke="#1F4E4A" stroke-width="2.4" opacity=".4"/>
+    <!-- warp (terracotta + gold, over) -->
+    <path d="M150 0 Q175 315 150 630" stroke="#C75B39" stroke-width="2.6" opacity=".55"/>
+    <path d="M340 0 Q318 315 340 630" stroke="#B8884B" stroke-width="2.2" opacity=".5"/>
+    <path d="M880 0 Q905 315 880 630" stroke="#C75B39" stroke-width="2.4" opacity=".5"/>
+    <path d="M1050 0 Q1028 315 1050 630" stroke="#B8884B" stroke-width="2.2" opacity=".5"/>
+  </g>
+
+  <!-- eyebrow rule -->
+  <line x1="96" y1="232" x2="156" y2="232" stroke="url(#thr)" stroke-width="3"/>
+  <text x="172" y="240" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600"
+        letter-spacing="6" fill="#C75B39">DIGITAL CRAFT STUDIO</text>
+
+  <!-- wordmark -->
+  <text x="92" y="400" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="200"
+        font-weight="600" letter-spacing="-4" fill="#1C1814">LOOM</text>
+
+  <!-- tagline -->
+  <text x="98" y="478" font-family="Fraunces, Georgia, serif" font-size="52" font-weight="400"
+        fill="#4A423A">We weave technology</text>
+  <text x="100" y="528" font-family="Inter, system-ui, sans-serif" font-size="27" font-weight="400"
+        fill="#4A423A">Websites, apps &amp; AI — woven by hand.</text>
+
+  <!-- contact -->
+  <text x="100" y="582" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="500"
+        fill="#B8884B">mofakhori@gmail.com</text>
+</svg>
