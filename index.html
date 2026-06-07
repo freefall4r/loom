@@ -19,6 +19,35 @@
 </head>
 <body>
 
+<!-- Logo-reveal intro (plays once per session; skipped on reduced-motion) -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__mark">
+    <svg viewBox="0 0 60 60" fill="none" aria-hidden="true">
+      <path class="intro__thread t1" pathLength="1" d="M14 8 V52"/>
+      <path class="intro__thread t3" pathLength="1" d="M30 8 V52"/>
+      <path class="intro__thread t1" pathLength="1" d="M46 8 V52"/>
+      <path class="intro__thread t2" pathLength="1" d="M8 18 H52"/>
+      <path class="intro__thread t4" pathLength="1" d="M8 34 H52"/>
+      <path class="intro__thread t2" pathLength="1" d="M8 50 H52"/>
+    </svg>
+    <span class="intro__word">LOOM</span>
+  </div>
+</div>
+<script>
+  (function () {
+    var intro = document.getElementById('intro');
+    if (!intro) return;
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var seen = false;
+    try { seen = sessionStorage.getItem('loom_intro') === '1'; } catch (e) {}
+    if (rm || seen) { intro.parentNode.removeChild(intro); return; }
+    try { sessionStorage.setItem('loom_intro', '1'); } catch (e) {}
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(function () { intro.classList.add('is-done'); document.documentElement.style.overflow = ''; }, 2000);
+    intro.addEventListener('transitionend', function () { if (intro.parentNode) intro.parentNode.removeChild(intro); });
+  })();
+</script>
+
 <header class="nav">
   <div class="nav__inner wrap">
     <a class="nav__logo" href="index.html" aria-label="LOOM home">
@@ -157,6 +186,41 @@
       <p class="section__more reveal">
         <a class="link-arrow" href="services.html">Explore all capabilities &rarr;</a>
       </p>
+    </div>
+  </section>
+
+  <!-- ============ AR LIVE DEMO ============ -->
+  <section class="section section--soft" id="ar-demo">
+    <div class="wrap showpiece">
+      <div class="showpiece__copy reveal">
+        <p class="eyebrow">Augmented reality &middot; live demo</p>
+        <h2>See it in your space.</h2>
+        <p>This isn't a picture — it's a real 3D object, running in your browser right now.
+          Drag to spin it. On your phone, tap <strong>"View in your room"</strong> and it
+          appears in front of you, to scale, through your camera.</p>
+        <p>That's the AR we weave into products and spaces for clients — let people place
+          your furniture, art, or product in their own room before they buy.</p>
+        <p class="ar-hint muted">Drag to rotate &middot; works in any modern browser &middot; AR on supported phones.</p>
+      </div>
+      <div class="showpiece__media reveal" data-delay="2">
+        <model-viewer
+          class="ar-viewer"
+          src="assets/models/loom-weave.glb"
+          alt="A woven 3D LOOM object you can rotate and place in your room with AR"
+          camera-controls
+          auto-rotate
+          auto-rotate-delay="600"
+          rotation-per-second="18deg"
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          shadow-intensity="0.9"
+          exposure="1.05"
+          camera-orbit="25deg 78deg auto"
+          field-of-view="30deg"
+          loading="eager">
+          <button slot="ar-button" class="btn btn--thread ar-btn">View in your room</button>
+        </model-viewer>
+      </div>
     </div>
   </section>
 
@@ -310,5 +374,6 @@
 </footer>
 <script src="assets/js/loom.js" defer></script>
 <script src="assets/js/loom-3d.js" defer></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </body>
 </html>

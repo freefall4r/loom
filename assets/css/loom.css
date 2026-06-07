@@ -1007,3 +1007,82 @@ details.card p { margin: 1rem 0 0; color: var(--ink-soft); }
   .float { animation: none; }
   .hero__three { opacity: .4; }
 }
+
+/* ===========================================================================
+   19. AR VIEWER · PRINTABLE MOCKUP · LOGO-REVEAL INTRO
+   =========================================================================== */
+
+/* --- <model-viewer> AR demo --- */
+.ar-viewer {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 100% at 50% 20%, #fffdf8 0%, var(--paper-2) 70%, #e7dcc8 100%);
+  box-shadow: var(--shadow-3d);
+  --poster-color: transparent;
+  cursor: grab;
+}
+.ar-viewer:active { cursor: grabbing; }
+.ar-btn {
+  position: absolute;
+  bottom: 16px; left: 50%; transform: translateX(-50%);
+  white-space: nowrap;
+}
+/* model-viewer's own progress bar tinted to brand */
+.ar-viewer::part(default-progress-bar) { background: var(--thread); }
+.ar-hint { margin-top: 1rem; font-size: .85rem; }
+
+/* --- Printable / paper mockup (Huroofi) --- */
+.paper-mock {
+  position: relative;
+  max-width: 360px;
+  margin-inline: auto;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-3d);
+}
+.paper-mock::before {            /* a second sheet peeking behind = a stack */
+  content: ""; position: absolute; inset: 0;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px;
+  transform: rotate(-3.5deg); z-index: -1;
+  box-shadow: var(--shadow-float);
+}
+.paper-mock__img { display: block; width: 100%; height: auto; border-radius: 4px; }
+
+/* --- Logo-reveal intro (plays once per session, skips on reduced-motion) --- */
+.intro {
+  position: fixed; inset: 0; z-index: 2000;
+  display: grid; place-items: center;
+  background: var(--paper);
+  transition: opacity .7s var(--ease), visibility .7s var(--ease);
+}
+.intro.is-done { opacity: 0; visibility: hidden; }
+.intro__mark { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+.intro svg { width: 96px; height: 96px; overflow: visible; }
+.intro__thread {
+  fill: none; stroke-width: 2.4; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: intro-draw .9s var(--ease) forwards;
+}
+.intro__thread.t1 { stroke: var(--thread);   animation-delay: .05s; }
+.intro__thread.t2 { stroke: var(--thread-2); animation-delay: .18s; }
+.intro__thread.t3 { stroke: var(--gold);     animation-delay: .31s; }
+.intro__thread.t4 { stroke: var(--thread);   animation-delay: .44s; }
+.intro__word {
+  font-family: var(--font-display); font-weight: 600; font-size: 2rem;
+  letter-spacing: .55em; opacity: 0; color: var(--ink);
+  padding-left: .55em;
+  animation: intro-word .8s var(--ease) .6s forwards;
+}
+@keyframes intro-draw { to { stroke-dashoffset: 0; } }
+@keyframes intro-word { to { opacity: 1; letter-spacing: .2em; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none; }
+}
