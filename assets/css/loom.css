@@ -859,3 +859,151 @@ details.card p { margin: 1rem 0 0; color: var(--ink-soft); }
 .section--ink details.card summary { color: var(--paper); }
 .section--ink details.card summary::after { color: var(--gold); }
 .section--ink details.card p { color: rgba(247,242,233,.72); }
+
+/* ===========================================================================
+   18. DEPTH & 3D — hero scene, mockups, cursor-tilt, parallax, float
+   =========================================================================== */
+:root {
+  --shadow-3d: 0 38px 70px -28px rgba(28,24,20,.42), 0 16px 30px -16px rgba(28,24,20,.26);
+  --shadow-float: 0 30px 60px -24px rgba(28,24,20,.34);
+}
+
+/* --- Hero v2: copy left, 3D woven art right, ambient WebGL weave behind --- */
+.hero { position: relative; overflow: hidden; }
+.hero__three {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  opacity: .42;
+  pointer-events: none;
+}
+/* keep the headline crisp over the woven threads */
+.hero__copy { position: relative; }
+.hero__copy .display, .hero__copy .lede { text-shadow: 0 1px 0 rgba(247,242,233,.5); }
+.hero__inner { position: relative; z-index: 1; }
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hero__grid { grid-template-columns: 1.04fr .96fr; }
+}
+.hero__copy { max-width: 36ch; }
+.hero__copy .display { margin-bottom: .35em; }
+.hero__copy .lede { margin-bottom: 2rem; max-width: 40ch; }
+
+.hero__visual { perspective: 1200px; }
+.hero__art-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper-card);
+  box-shadow: var(--shadow-3d);
+  transform-style: preserve-3d;
+  aspect-ratio: 16 / 11;
+}
+.hero__art-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* a soft woven-gold sheen sweeping the art */
+.hero__art-frame::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 55%, rgba(184,136,75,.18) 80%, transparent 100%);
+}
+
+/* --- Cursor tilt --- */
+[data-tilt] {
+  transform: perspective(1100px) rotateX(0) rotateY(0);
+  transform-style: preserve-3d;
+  transition: transform .5s var(--ease);
+  will-change: transform;
+}
+[data-tilt]:hover { transition: transform .12s var(--ease); }
+[data-tilt-layer] { transition: transform .3s var(--ease); will-change: transform; }
+
+/* --- Scroll parallax --- */
+[data-parallax] { transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+
+/* --- Gentle float (decorative) --- */
+@keyframes loom-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+.float { animation: loom-float 7s ease-in-out infinite; }
+
+/* --- Device mockups (browser + phone) holding real screenshots --- */
+.scene { perspective: 1200px; }
+
+.mockup {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-3d);
+}
+.mockup__bar {
+  display: flex; align-items: center; gap: .45rem;
+  padding: .6rem .8rem;
+  background: linear-gradient(180deg, #fffdf8, var(--paper-2));
+  border-bottom: 1px solid var(--line);
+}
+.mockup__dot { width: 9px; height: 9px; border-radius: 50%; background: #d9cdb6; flex: none; }
+.mockup__dot:nth-child(1) { background: #e0795c; }
+.mockup__dot:nth-child(2) { background: #e3b765; }
+.mockup__dot:nth-child(3) { background: #8fb7a6; }
+.mockup__url {
+  margin-left: .6rem; flex: 1;
+  font-size: .72rem; color: var(--ink-soft);
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 999px; padding: .2rem .7rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 60%;
+}
+.mockup__img { display: block; width: 100%; height: auto; }
+
+.mockup--phone {
+  border: 9px solid #1b1714;
+  border-radius: 36px;
+  padding: 0; max-width: 270px;
+  margin-inline: auto;
+  position: relative;
+  background: #1b1714;
+}
+.mockup--phone .mockup__img { border-radius: 26px; }
+.mockup--phone::before {
+  content: ""; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 78px; height: 6px; border-radius: 99px;
+  background: rgba(247,242,233,.35); z-index: 2;
+}
+
+/* A stage that gives floating mockups breathing room + depth backdrop */
+.showpiece {
+  position: relative;
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 880px) { .showpiece { grid-template-columns: 1.1fr .9fr; } }
+.showpiece__media { position: relative; min-height: 1px; }
+.showpiece__copy > :last-child { margin-bottom: 0; }
+.showpiece__copy .pill-row { margin-bottom: 1.4rem; }
+.showpiece + .showpiece { margin-top: clamp(3rem, 7vw, 6rem); }
+.section__head + .showpiece { margin-top: clamp(1.5rem, 3vw, 2.5rem); }
+@media (min-width: 880px) {
+  .showpiece--flip .showpiece__media { order: 2; }
+  .showpiece--flip .showpiece__copy { order: 1; }
+}
+
+/* When a mockup sits in a tilt scene, layers can lift for depth */
+.lift-1 { transform: translateZ(20px); }
+.lift-2 { transform: translateZ(45px); }
+
+/* Reduced motion: kill tilt/parallax/float transforms & animation */
+@media (prefers-reduced-motion: reduce) {
+  [data-tilt], [data-parallax] { transform: none !important; }
+  .float { animation: none; }
+  .hero__three { opacity: .4; }
+}

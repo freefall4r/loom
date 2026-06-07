@@ -126,18 +126,10 @@
   <section class="section">
     <div class="wrap">
       <article class="case reveal">
-        <div class="case__visual">
-          <div class="visual visual--plexus">
-            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <pattern id="warp-plexus" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M0 0 H40 M0 13 H40 M0 27 H40" stroke="rgba(247,242,233,.16)" stroke-width="1.4"/>
-                  <path d="M0 0 V40 M13 0 V40 M27 0 V40" stroke="rgba(28,24,20,.16)" stroke-width="1.4"/>
-                </pattern>
-              </defs>
-              <rect width="400" height="300" fill="url(#warp-plexus)"/>
-            </svg>
-            <span class="visual__label">Plexus<br>Workshop<small>Premium brand site</small></span>
+        <div class="case__visual scene">
+          <div class="mockup" data-tilt data-tilt-max="9">
+            <div class="mockup__bar"><span class="mockup__dot"></span><span class="mockup__dot"></span><span class="mockup__dot"></span><span class="mockup__url">plexusworkshop.com</span></div>
+            <img class="mockup__img" src="assets/img/work/plexus.jpg" loading="lazy" alt="The Plexus Workshop website — a premium woodworking brand site">
           </div>
         </div>
         <div class="case__body">
@@ -170,24 +162,9 @@
   <section class="section section--ink">
     <div class="wrap">
       <article class="case case--flip reveal">
-        <div class="case__visual">
-          <div class="visual visual--garden">
-            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <radialGradient id="breath-garden" cx="50%" cy="42%" r="55%">
-                  <stop offset="0%" stop-color="rgba(184,136,75,.45)"/>
-                  <stop offset="60%" stop-color="rgba(184,136,75,0)"/>
-                </radialGradient>
-              </defs>
-              <rect width="400" height="300" fill="url(#breath-garden)"/>
-              <circle cx="200" cy="128" r="34" fill="none" stroke="rgba(247,242,233,.35)" stroke-width="1.2"/>
-              <circle cx="200" cy="128" r="58" fill="none" stroke="rgba(247,242,233,.22)" stroke-width="1.2"/>
-              <circle cx="200" cy="128" r="84" fill="none" stroke="rgba(247,242,233,.13)" stroke-width="1.2"/>
-              <g stroke="rgba(247,242,233,.10)" stroke-width="1">
-                <path d="M0 230 H400 M0 250 H400 M0 270 H400"/>
-              </g>
-            </svg>
-            <span class="visual__label visual__ar" lang="ar" dir="rtl">بُستان الرُّوح<small dir="ltr">Inner Garden &middot; breathe</small></span>
+        <div class="case__visual scene">
+          <div class="mockup mockup--phone float" data-tilt data-tilt-max="10">
+            <img class="mockup__img" src="assets/img/work/innergarden-mobile.jpg" loading="lazy" alt="Inner Garden — بُستان الرُّوح — an Arabic-first breathing and meditation app on a phone">
           </div>
         </div>
         <div class="case__body">
@@ -215,8 +192,8 @@
   <section class="section">
     <div class="wrap">
       <article class="case reveal">
-        <div class="case__visual">
-          <div class="visual visual--huroofi">
+        <div class="case__visual scene">
+          <div class="visual visual--huroofi" data-tilt data-tilt-max="7">
             <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <g stroke="rgba(28,24,20,.18)" stroke-width="1.2" fill="none">
                 <rect x="40" y="34" width="120" height="160" rx="6"/>
@@ -257,8 +234,8 @@
   <section class="section section--ink">
     <div class="wrap">
       <article class="case case--flip reveal">
-        <div class="case__visual">
-          <div class="visual visual--grove">
+        <div class="case__visual scene">
+          <div class="visual visual--grove" data-tilt data-tilt-max="7">
             <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <defs>
                 <pattern id="warp-grove" width="48" height="48" patternUnits="userSpaceOnUse">
@@ -299,8 +276,8 @@
   <section class="section">
     <div class="wrap">
       <article class="case reveal">
-        <div class="case__visual">
-          <div class="visual visual--agents">
+        <div class="case__visual scene">
+          <div class="visual visual--agents" data-tilt data-tilt-max="7">
             <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <g stroke="rgba(199,91,57,.55)" stroke-width="1.3" fill="none">
                 <path d="M200 60 L110 150 M200 60 L290 150 M200 60 L200 150"/>
@@ -400,5 +377,6 @@
   </div>
 </footer>
 <script src="assets/js/loom.js" defer></script>
+<script src="assets/js/loom-3d.js" defer></script>
 </body>
 </html>
