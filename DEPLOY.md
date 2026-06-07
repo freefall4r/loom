@@ -7,10 +7,10 @@ just follow the steps in order.
 You will end up with a public address like:
 
 ```
-https://USERNAME.github.io/loom/
+https://freefall4r.github.io/loom/
 ```
 
-…where `USERNAME` is your GitHub username and `loom` is the name you give the
+…where `freefall4r` is your GitHub username and `loom` is the name you give the
 project on GitHub.
 
 There are two ways to do this. **Method A (website-only)** uses your web browser
@@ -96,11 +96,11 @@ worked, **skip to Step 4.**
    your address in place of the example):
 
 ```bash
-git remote add origin https://github.com/USERNAME/loom.git
+git remote add origin https://github.com/freefall4r/loom.git
 git push -u origin main
 ```
 
-Replace `USERNAME` with your real GitHub username. This uploads your files.
+Replace `freefall4r` with your real GitHub username. This uploads your files.
 
 ---
 
@@ -119,7 +119,7 @@ GitHub now builds your site. Wait about **1–2 minutes**, then refresh that Pag
 settings page. It will show a green banner with your live link:
 
 ```
-https://USERNAME.github.io/loom/
+https://freefall4r.github.io/loom/
 ```
 
 Click it — your site is live. 🎉
@@ -136,7 +136,7 @@ Two files contain a placeholder username so search engines know your real
 address. Update them now that you know your link:
 
 1. Open **`sitemap.xml`** and **`robots.txt`**.
-2. Replace every `USERNAME` with your real GitHub username (and replace `loom`
+2. Replace every `freefall4r` with your real GitHub username (and replace `loom`
    if you named the repo something else).
 3. Save, then re-upload them (Method A) or run:
 

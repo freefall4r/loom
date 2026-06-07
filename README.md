@@ -77,12 +77,12 @@ A few things already handled for you:
 - Every internal link is **relative** (e.g. `services.html`), so the site works
   from a GitHub Pages sub-path.
 - Once live, your URL will look like:
-  `https://USERNAME.github.io/loom/`
-  (replace `USERNAME` with your GitHub username, and `loom` with your repo name
+  `https://freefall4r.github.io/loom/`
+  (replace `freefall4r` with your GitHub username, and `loom` with your repo name
   if you call it something else).
 
 > **One small follow-up after going live:** in `sitemap.xml` and `robots.txt`,
-> replace the placeholder `USERNAME` with your real GitHub username so search
+> replace the placeholder `freefall4r` with your real GitHub username so search
 > engines get the correct address.
 
 ---
