@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumière Clinic — Skin, considered.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ivory:#faf6f1;
+    --ivory-2:#f3ece4;
+    --blush:#f2dfd8;
+    --blush-soft:#f7e8e4;
+    --nude:#e7d6cb;
+    --taupe:#9b8576;
+    --taupe-deep:#6f6055;
+    --rosegold:#c19a86;
+    --rosegold-deep:#a87d68;
+    --ink:#3a322d;
+    --ink-soft:#6b5f57;
+    --hair:#e3d6cb;
+    --serif:'Cormorant', Georgia, serif;
+    --sans:'Jost', system-ui, sans-serif;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--ivory);
+    font-weight:300;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 56px;
+    background:rgba(250,246,241,0.72);
+    backdrop-filter:saturate(140%) blur(14px);
+    -webkit-backdrop-filter:saturate(140%) blur(14px);
+    border-bottom:1px solid rgba(195,170,150,0.18);
+    transition:padding .4s ease, background .4s ease;
+  }
+  nav.scrolled{ padding:14px 56px; background:rgba(250,246,241,0.92); }
+  .logo{
+    font-family:var(--serif);
+    font-size:25px;
+    letter-spacing:.42em;
+    font-weight:500;
+    color:var(--ink);
+    padding-left:.42em;
+  }
+  .nav-links{ display:flex; align-items:center; gap:42px; }
+  .nav-links a{
+    font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ink-soft); font-weight:400; position:relative;
+    transition:color .3s ease;
+  }
+  .nav-links a:not(.book)::after{
+    content:''; position:absolute; left:0; bottom:-5px; height:1px; width:0;
+    background:var(--rosegold-deep); transition:width .35s ease;
+  }
+  .nav-links a:not(.book):hover{ color:var(--ink); }
+  .nav-links a:not(.book):hover::after{ width:100%; }
+  .book{
+    border:1px solid var(--rosegold);
+    color:var(--rosegold-deep);
+    padding:11px 24px; border-radius:40px;
+    letter-spacing:.18em; font-size:11px;
+    transition:background .4s ease, color .4s ease, border-color .4s ease;
+  }
+  .book:hover{ background:var(--rosegold-deep); border-color:var(--rosegold-deep); color:var(--ivory); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding:0 56px;
+    background:
+      radial-gradient(120% 100% at 78% 18%, var(--blush-soft) 0%, rgba(247,232,228,0) 52%),
+      radial-gradient(130% 120% at 12% 92%, var(--ivory-2) 0%, rgba(243,236,228,0) 55%),
+      linear-gradient(165deg, var(--ivory) 0%, #f6ede6 100%);
+    overflow:hidden;
+  }
+  .hero-orb{
+    position:absolute; border-radius:50%; filter:blur(8px); pointer-events:none;
+  }
+  .orb-1{
+    width:560px; height:560px; right:-90px; top:-120px;
+    background:radial-gradient(circle at 35% 35%, rgba(242,223,216,.9), rgba(231,214,203,.35) 55%, rgba(231,214,203,0) 72%);
+  }
+  .orb-2{
+    width:340px; height:340px; right:280px; bottom:60px;
+    background:radial-gradient(circle at 40% 40%, rgba(247,232,228,.85), rgba(247,232,228,0) 70%);
+  }
+  .hero-inner{ position:relative; z-index:2; max-width:760px; }
+  .eyebrow{
+    font-size:12px; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--rosegold-deep); margin-bottom:30px; display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{ content:''; width:34px; height:1px; background:var(--rosegold); display:inline-block; }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:300;
+    font-size:104px;
+    line-height:.98;
+    letter-spacing:-.5px;
+    color:var(--ink);
+    margin-bottom:30px;
+  }
+  .hero h1 em{ font-style:italic; color:var(--rosegold-deep); }
+  .hero p.sub{
+    font-size:19px; font-weight:300; color:var(--ink-soft);
+    max-width:480px; margin-bottom:44px; line-height:1.75;
+  }
+  .hero-cta{ display:flex; align-items:center; gap:30px; }
+  .btn-primary{
+    background:var(--ink); color:var(--ivory);
+    padding:17px 38px; border-radius:42px;
+    letter-spacing:.16em; font-size:12px; text-transform:uppercase;
+    transition:background .4s ease, transform .4s ease;
+  }
+  .btn-primary:hover{ background:var(--rosegold-deep); transform:translateY(-2px); }
+  .btn-text{
+    font-size:13px; letter-spacing:.06em; color:var(--ink-soft);
+    border-bottom:1px solid transparent; padding-bottom:2px;
+    transition:border-color .3s ease, color .3s ease;
+  }
+  .btn-text:hover{ border-color:var(--taupe); color:var(--ink); }
+  .hero-aside{
+    position:absolute; right:56px; bottom:54px; z-index:2;
+    text-align:right; max-width:200px;
+  }
+  .hero-aside .yr{ font-family:var(--serif); font-size:46px; color:var(--rosegold-deep); line-height:1; }
+  .hero-aside .cap{ font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft); margin-top:8px; }
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust{
+    display:flex; justify-content:center; align-items:stretch; gap:0;
+    padding:38px 56px;
+    background:var(--ink);
+    color:var(--ivory);
+  }
+  .trust .item{
+    flex:1; text-align:center; padding:6px 30px;
+    border-right:1px solid rgba(255,255,255,.12);
+  }
+  .trust .item:last-child{ border-right:none; }
+  .trust .big{ font-family:var(--serif); font-size:34px; font-weight:400; color:#f3e3da; line-height:1; }
+  .trust .lbl{ font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:rgba(243,227,218,.62); margin-top:9px; }
+
+  /* ---------- TREATMENTS ---------- */
+  .treatments{ padding:128px 56px 120px; background:var(--ivory); }
+  .sec-head{ text-align:center; max-width:620px; margin:0 auto 72px; }
+  .sec-head .eyebrow{ justify-content:center; }
+  .sec-head .eyebrow::after{ content:''; width:34px; height:1px; background:var(--rosegold); display:inline-block; }
+  .sec-head h2{
+    font-family:var(--serif); font-weight:300; font-size:58px; line-height:1.06;
+    color:var(--ink); margin-bottom:18px;
+  }
+  .sec-head p{ font-size:16px; color:var(--ink-soft); }
+
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px; max-width:1180px; margin:0 auto; }
+  .card{
+    background:#fffdfb;
+    border:1px solid var(--hair);
+    border-radius:6px;
+    padding:0 0 40px;
+    overflow:hidden;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease, border-color .5s ease;
+  }
+  .card:hover{ transform:translateY(-9px); box-shadow:0 28px 60px -34px rgba(120,94,76,.45); border-color:var(--nude); }
+  .card .thumb{
+    height:230px; position:relative; overflow:hidden;
+  }
+  .card .thumb .grad{ position:absolute; inset:0; }
+  .c1 .grad{ background:linear-gradient(150deg,#f7e9e3 0%,#ecd7cb 100%); }
+  .c2 .grad{ background:linear-gradient(150deg,#f1e7df 0%,#e2d3c5 100%); }
+  .c3 .grad{
+    background:
+      linear-gradient(150deg, rgba(247,232,228,.55), rgba(225,205,193,.5)),
+      url('https://picsum.photos/seed/petals/1600/1000') center/cover;
+  }
+  .card .thumb .icon{
+    position:absolute; left:28px; bottom:24px;
+    width:52px; height:52px; border-radius:50%;
+    background:rgba(255,253,251,.72); backdrop-filter:blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-size:22px; color:var(--rosegold-deep);
+    border:1px solid rgba(255,255,255,.5);
+  }
+  .card .body{ padding:30px 32px 0; }
+  .card h3{ font-family:var(--serif); font-weight:400; font-size:30px; color:var(--ink); margin-bottom:12px; }
+  .card .desc{ font-size:14px; color:var(--ink-soft); line-height:1.7; margin-bottom:24px; min-height:72px; }
+  .card .row{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding-top:20px; border-top:1px solid var(--hair);
+  }
+  .card .price small{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--taupe); display:block; margin-bottom:4px; }
+  .card .price b{ font-family:var(--serif); font-weight:500; font-size:26px; color:var(--ink); }
+  .card .arrow{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--hair);
+    display:flex; align-items:center; justify-content:center; color:var(--rosegold-deep);
+    transition:background .35s ease, color .35s ease, border-color .35s ease;
+  }
+  .card:hover .arrow{ background:var(--rosegold-deep); color:var(--ivory); border-color:var(--rosegold-deep); }
+
+  /* ---------- BOOKING FOOTER ---------- */
+  .booking{
+    position:relative;
+    padding:130px 56px 64px;
+    background:
+      radial-gradient(120% 110% at 80% 0%, var(--blush-soft) 0%, rgba(247,232,228,0) 50%),
+      linear-gradient(180deg,#f6ede6 0%, var(--ivory-2) 100%);
+    overflow:hidden;
+  }
+  .booking-inner{ position:relative; z-index:2; text-align:center; max-width:680px; margin:0 auto; }
+  .booking h2{ font-family:var(--serif); font-weight:300; font-size:64px; line-height:1.02; color:var(--ink); margin-bottom:22px; }
+  .booking h2 em{ font-style:italic; color:var(--rosegold-deep); }
+  .booking p{ font-size:17px; color:var(--ink-soft); margin-bottom:42px; }
+  .booking .btn-primary{ display:inline-block; }
+  .booking .meta{
+    margin-top:30px; font-size:13px; letter-spacing:.04em; color:var(--ink-soft);
+  }
+  .booking .meta a{ color:var(--rosegold-deep); border-bottom:1px solid var(--nude); padding-bottom:1px; }
+
+  footer{
+    position:relative; z-index:2;
+    margin-top:96px; padding-top:34px;
+    border-top:1px solid var(--hair);
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:1180px; margin-left:auto; margin-right:auto;
+  }
+  footer .logo{ font-size:18px; }
+  footer .fcols{ display:flex; gap:38px; }
+  footer .fcols a{ font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); transition:color .3s ease; }
+  footer .fcols a:hover{ color:var(--rosegold-deep); }
+  footer .copy{ font-size:11px; letter-spacing:.1em; color:var(--taupe); }
+
+  /* ---------- REVEALS ---------- */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal.d1{ transition-delay:.08s; }
+  .reveal.d2{ transition-delay:.16s; }
+  .reveal.d3{ transition-delay:.24s; }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="logo">LUMIÈRE</div>
+    <div class="nav-links">
+      <a href="#treatments">Treatments</a>
+      <a href="#">Practitioners</a>
+      <a href="#">Journal</a>
+      <a href="#booking" class="book">Book consultation</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+    <div class="hero-inner">
+      <div class="eyebrow reveal">Aesthetics &amp; Dermatology — Amman</div>
+      <h1 class="reveal d1">Skin,<br /><em>considered.</em></h1>
+      <p class="sub reveal d2">A quiet clinic for thoughtful skin. Medical-grade results,
+        delivered with the calm of a sanctuary — by board-certified hands.</p>
+      <div class="hero-cta reveal d3">
+        <a href="#booking" class="btn-primary">Book a consultation</a>
+        <a href="#treatments" class="btn-text">Explore treatments</a>
+      </div>
+    </div>
+    <div class="hero-aside reveal d3">
+      <div class="yr">Est. ’14</div>
+      <div class="cap">Abdoun · Amman</div>
+    </div>
+  </header>
+
+  <!-- TRUST STRIP -->
+  <section class="trust">
+    <div class="item reveal"><div class="big">Board-certified</div><div class="lbl">Dermatologists</div></div>
+    <div class="item reveal d1"><div class="big">12,400+</div><div class="lbl">Treatments delivered</div></div>
+    <div class="item reveal d2"><div class="big">4.9 ★</div><div class="lbl">Across 800 reviews</div></div>
+    <div class="item reveal d3"><div class="big">Quiet</div><div class="lbl">Private suites, no rush</div></div>
+  </section>
+
+  <!-- TREATMENTS -->
+  <section class="treatments" id="treatments">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Signature treatments</div>
+      <h2>Considered care, <em>start to glow</em></h2>
+      <p>Three of our most-requested rituals — each tailored in consultation, never off-the-shelf.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card c1 reveal">
+        <div class="thumb"><div class="grad"></div><div class="icon">✺</div></div>
+        <div class="body">
+          <h3>Glow Facial</h3>
+          <p class="desc">A gentle resurfacing ritual — enzyme cleanse, lymphatic massage and a luminous
+            finishing mask. Calm, hydrating, immediately radiant.</p>
+          <div class="row">
+            <div class="price"><small>From</small><b>JD 65</b></div>
+            <div class="arrow">→</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card c2 reveal d1">
+        <div class="thumb"><div class="grad"></div><div class="icon">◍</div></div>
+        <div class="body">
+          <h3>Skin Renewal</h3>
+          <p class="desc">Medical-grade peels and microneedling to soften texture, tone and fine lines.
+            A measured course, planned around your skin and your calendar.</p>
+          <div class="row">
+            <div class="price"><small>From</small><b>JD 120</b></div>
+            <div class="arrow">→</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card c3 reveal d2">
+        <div class="thumb"><div class="grad"></div><div class="icon">❋</div></div>
+        <div class="body">
+          <h3>Injectables</h3>
+          <p class="desc">Anti-wrinkle and dermal filler artistry — refined, never overdone. Subtle
+            balance by physicians who believe less is the luxury.</p>
+          <div class="row">
+            <div class="price"><small>From</small><b>JD 150</b></div>
+            <div class="arrow">→</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- BOOKING FOOTER -->
+  <section class="booking" id="booking">
+    <div class="booking-inner">
+      <div class="eyebrow reveal" style="justify-content:center;">Begin with a conversation</div>
+      <h2 class="reveal d1">Your first visit is a <em>consultation</em>,<br />not a sales pitch.</h2>
+      <p class="reveal d2">Twenty unhurried minutes with a board-certified dermatologist to map a plan that
+        suits your skin. No pressure, no packages — just clarity.</p>
+      <a href="#" class="btn-primary reveal d3">Reserve your consultation</a>
+      <div class="meta reveal d3">Or call us at <a href="#">+962 6 000 0000</a> · Sun–Thu, 10:00–19:00</div>
+    </div>
+
+    <footer>
+      <div class="logo">LUMIÈRE</div>
+      <div class="fcols">
+        <a href="#treatments">Treatments</a>
+        <a href="#">Practitioners</a>
+        <a href="#">Journal</a>
+        <a href="#booking">Contact</a>
+      </div>
+      <div class="copy">© 2026 Lumière Clinic — Abdoun, Amman</div>
+    </footer>
+  </section>
+
+  <script>
+    // Nav condense on scroll
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function(){
+      if(window.scrollY > 30){ nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    }, { passive:true });
+
+    // Scroll reveals
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var els = document.querySelectorAll('.reveal');
+    if(reduce || !('IntersectionObserver' in window)){
+      els.forEach(function(e){ e.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold:0.16, rootMargin:'0px 0px -8% 0px' });
+      els.forEach(function(e){ io.observe(e); });
+    }
+  </script>
+</body>
+</html>

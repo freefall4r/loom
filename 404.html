@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost thread — LOOM</title>
+  <meta name="description" content="This thread leads nowhere. Let's weave you back to LOOM.">
+  <meta name="theme-color" content="#F7F2E9">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!--
+    Self-contained inline styles only.
+    GitHub Pages can serve 404.html from any path, so no relative asset CSS is
+    relied on here (the favicon/font links degrade gracefully if not found).
+  -->
+  <style>
+    :root{
+      --paper:#F7F2E9;
+      --paper-2:#EFE7D8;
+      --ink:#1C1814;
+      --ink-soft:#4A423A;
+      --thread:#C75B39;
+      --thread-2:#1F4E4A;
+      --gold:#B8884B;
+      --line:#D8CDB9;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:'Inter',system-ui,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      padding:clamp(1.5rem,5vw,4rem);
+      position:relative;
+      overflow-x:hidden;
+    }
+    /* Faint woven warp/weft texture in the background */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        repeating-linear-gradient(90deg, rgba(28,24,20,.035) 0 1px, transparent 1px 46px),
+        repeating-linear-gradient(0deg, rgba(28,24,20,.025) 0 1px, transparent 1px 46px);
+      pointer-events:none;
+      z-index:0;
+    }
+    .card{
+      position:relative;
+      z-index:1;
+      max-width:640px;
+      width:100%;
+      text-align:center;
+    }
+    .wordmark{
+      display:inline-flex;
+      align-items:center;
+      gap:.6rem;
+      font-family:'Fraunces',Georgia,serif;
+      font-weight:600;
+      letter-spacing:.08em;
+      font-size:1.15rem;
+      color:var(--ink);
+      text-decoration:none;
+      margin-bottom:clamp(2rem,6vw,3.2rem);
+    }
+    .wordmark .mark{
+      width:26px;height:26px;display:block;
+    }
+    .eyebrow{
+      display:inline-block;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:.72rem;
+      font-weight:600;
+      color:var(--thread);
+      margin-bottom:1rem;
+    }
+    .code{
+      font-family:'Fraunces',Georgia,serif;
+      font-weight:500;
+      font-size:clamp(3.4rem,16vw,7rem);
+      line-height:.95;
+      letter-spacing:-.02em;
+      margin:0 0 .4rem;
+      color:var(--ink);
+    }
+    h1{
+      font-family:'Fraunces',Georgia,serif;
+      font-weight:500;
+      font-size:clamp(1.7rem,4vw,2.6rem);
+      letter-spacing:-.01em;
+      margin:0 0 1rem;
+      color:var(--ink);
+    }
+    p.lede{
+      font-size:1.0625rem;
+      line-height:1.7;
+      color:var(--ink-soft);
+      max-width:46ch;
+      margin:0 auto 2.2rem;
+    }
+    /* Woven divider line */
+    .thread-rule{
+      width:120px;
+      height:2px;
+      margin:0 auto 2rem;
+      background:
+        repeating-linear-gradient(90deg, var(--thread) 0 10px, var(--thread-2) 10px 20px);
+      border-radius:999px;
+      opacity:.85;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      background:var(--ink);
+      color:var(--paper);
+      font-weight:500;
+      font-size:.98rem;
+      text-decoration:none;
+      padding:.85rem 1.6rem;
+      border-radius:10px;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+      box-shadow:0 8px 30px rgba(28,24,20,.14);
+    }
+    .btn:hover,.btn:focus-visible{
+      transform:translateY(-2px);
+      background:var(--thread);
+      outline:none;
+    }
+    .btn:focus-visible{
+      box-shadow:0 0 0 3px var(--paper), 0 0 0 5px var(--thread);
+    }
+    .btn .arrow{transition:transform .18s ease;}
+    .btn:hover .arrow{transform:translateX(3px);}
+    a:focus-visible{outline:2px solid var(--thread);outline-offset:3px;border-radius:4px;}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <a class="wordmark" href="index.html" aria-label="LOOM home">
+      <!-- inline woven mark so the wordmark always renders -->
+      <svg class="mark" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="24" rx="6" stroke="#1C1814" stroke-width="1.5"/>
+        <path d="M5 9h16M5 13h16M5 17h16" stroke="#C75B39" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M9 5v16M13 5v16M17 5v16" stroke="#1F4E4A" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
+      </svg>
+      <span>LOOM</span>
+    </a>
+
+    <p class="eyebrow">Lost thread</p>
+    <p class="code">404</p>
+    <div class="thread-rule" aria-hidden="true"></div>
+    <h1>This thread leads nowhere</h1>
+    <p class="lede">
+      The page you were looking for has slipped off the loom. Nothing here yet —
+      but the weave goes on. Let us guide you back to the studio.
+    </p>
+    <a class="btn" href="index.html">
+      Back to LOOM
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </main>
+</body>
+</html>

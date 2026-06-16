@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RASIN — Specialty Coffee, Roasted in Amman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #f4ece0;
+    --oat: #ece0cf;
+    --espresso: #2c1c12;
+    --espresso-soft: #4a3526;
+    --terracotta: #c75b39;
+    --terracotta-deep: #a8492c;
+    --caramel: #c79461;
+    --ink: #34281e;
+    --paper: #faf4ea;
+    --shadow: rgba(44, 28, 18, 0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* film grain overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, .display {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    color: var(--espresso);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(244, 236, 224, 0.72);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom: 1px solid rgba(44, 28, 18, 0.08);
+    transition: padding 0.35s ease;
+  }
+
+  .logo {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.16em;
+    color: var(--espresso);
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .logo .dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    box-shadow: 0 0 0 4px rgba(199, 91, 57, 0.18);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 38px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a.link {
+    position: relative;
+    color: var(--espresso-soft);
+    transition: color 0.25s ease;
+  }
+  .nav-links a.link::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -5px;
+    width: 100%; height: 2px;
+    background: var(--terracotta);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+  }
+  .nav-links a.link:hover { color: var(--espresso); }
+  .nav-links a.link:hover::after { transform: scaleX(1); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    padding: 12px 22px;
+    border-radius: 40px;
+    background: var(--espresso);
+    color: var(--paper);
+    border: 1px solid var(--espresso);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(.2,.8,.2,1), background 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn:hover {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(199, 91, 57, 0.32);
+  }
+  .btn .arrow { transition: transform 0.25s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  .btn.ghost {
+    background: transparent;
+    color: var(--espresso);
+    border: 1px solid rgba(44, 28, 18, 0.28);
+  }
+  .btn.ghost:hover {
+    background: var(--espresso);
+    color: var(--paper);
+    border-color: var(--espresso);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 90px;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 82% 12%, rgba(199, 91, 57, 0.22), transparent 56%),
+      radial-gradient(90% 80% at 10% 95%, rgba(199, 148, 97, 0.30), transparent 60%),
+      linear-gradient(168deg, #f6efe4 0%, #ecdfcd 58%, #e6d6c0 100%);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    margin-bottom: 26px;
+  }
+  .eyebrow .rule { width: 34px; height: 1.5px; background: var(--terracotta); }
+
+  .hero h1 {
+    font-size: clamp(52px, 6.2vw, 86px);
+    margin-bottom: 26px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--terracotta);
+  }
+
+  .hero p.lede {
+    font-size: 19px;
+    max-width: 460px;
+    color: var(--espresso-soft);
+    margin-bottom: 38px;
+  }
+
+  .hero-cta { display: flex; align-items: center; gap: 18px; }
+
+  .hero-meta {
+    margin-top: 50px;
+    display: flex;
+    gap: 44px;
+  }
+  .hero-meta .m-num {
+    font-family: "Fraunces", serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--espresso);
+    line-height: 1;
+  }
+  .hero-meta .m-lab {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--espresso-soft);
+    margin-top: 6px;
+  }
+
+  /* hero visual card */
+  .hero-card {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    box-shadow: 0 30px 70px rgba(44, 28, 18, 0.28);
+    transform: rotate(1.4deg);
+    transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .hero-card:hover { transform: rotate(0deg) scale(1.01); }
+  .hero-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(1.05) contrast(1.02);
+  }
+  .hero-card .overlay {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(44,28,18,0) 40%, rgba(44,28,18,0.55) 100%),
+      linear-gradient(120deg, rgba(199,91,57,0.30), rgba(74,53,38,0.18));
+    mix-blend-mode: multiply;
+  }
+  .hero-card .tag {
+    position: absolute;
+    left: 22px; bottom: 22px;
+    color: var(--paper);
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: 21px;
+  }
+  .hero-card .tag small {
+    display: block;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+  .hero-badge {
+    position: absolute;
+    top: -22px; right: -18px;
+    width: 116px; height: 116px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    color: var(--paper);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.15;
+    box-shadow: 0 12px 30px rgba(199,91,57,0.4);
+    animation: spin 28s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .steam {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, transparent, rgba(230, 214, 192, 0.6));
+    pointer-events: none;
+  }
+
+  /* ---------- STORY STRIP ---------- */
+  .story {
+    background: var(--espresso);
+    color: var(--paper);
+    padding: 86px 0;
+    position: relative;
+  }
+  .story .wrap { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 60px; align-items: center; }
+  .story .eyebrow { color: var(--caramel); }
+  .story h2 {
+    color: var(--paper);
+    font-size: clamp(32px, 3.4vw, 46px);
+    margin-bottom: 0;
+  }
+  .story h2 em { font-style: italic; color: var(--caramel); }
+  .story p {
+    color: #e8dccb;
+    font-size: 17px;
+    max-width: 520px;
+  }
+  .story p + p { margin-top: 18px; }
+  .story .sig {
+    margin-top: 26px;
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--caramel);
+  }
+
+  /* ---------- ROASTS ---------- */
+  .roasts { padding: 100px 0 88px; }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 52px;
+    gap: 30px;
+  }
+  .section-head h2 { font-size: clamp(34px, 4vw, 54px); }
+  .section-head h2 em { font-style: italic; color: var(--terracotta); }
+  .section-head p { color: var(--espresso-soft); max-width: 300px; font-size: 16px; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid rgba(44, 28, 18, 0.10);
+    border-radius: 24px;
+    padding: 28px 26px 30px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 26px 50px rgba(44, 28, 18, 0.16);
+    border-color: rgba(199, 91, 57, 0.4);
+  }
+
+  .bean {
+    height: 168px;
+    border-radius: 18px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .bean::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.12;
+    mix-blend-mode: overlay;
+  }
+  .bean .cup {
+    width: 74px; height: 74px;
+    border-radius: 50%;
+    background: rgba(250, 244, 234, 0.16);
+    border: 1.5px solid rgba(250, 244, 234, 0.5);
+    display: grid; place-items: center;
+    color: var(--paper);
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: 26px;
+    backdrop-filter: blur(2px);
+  }
+  .bean.b1 { background: linear-gradient(150deg, #c75b39, #8a3a23); }
+  .bean.b2 { background: linear-gradient(150deg, #b07d4a, #6e4a28); }
+  .bean.b3 { background: linear-gradient(150deg, #5c3a26, #2c1c12); }
+
+  .card .origin {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    margin-bottom: 8px;
+  }
+  .card h3 { font-size: 25px; margin-bottom: 12px; }
+  .card .notes {
+    font-size: 15px;
+    color: var(--espresso-soft);
+    margin-bottom: 22px;
+    flex: 1;
+  }
+  .card .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid rgba(44, 28, 18, 0.10);
+  }
+  .card .price {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--espresso);
+  }
+  .card .price small { font-size: 14px; font-weight: 500; color: var(--espresso-soft); }
+  .card .add {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--terracotta-deep);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.25s ease;
+  }
+  .card:hover .add { gap: 11px; }
+
+  .tnote {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(199, 91, 57, 0.10);
+    color: var(--terracotta-deep);
+    margin: 0 5px 5px 0;
+  }
+
+  /* ---------- VISIT FOOTER ---------- */
+  .visit {
+    background:
+      radial-gradient(80% 100% at 90% 0%, rgba(199, 91, 57, 0.16), transparent 55%),
+      linear-gradient(180deg, #ece0cf, #e3d2bb);
+    padding: 92px 0 0;
+  }
+  .visit .top { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: flex-start; }
+  .visit h2 { font-size: clamp(40px, 4.6vw, 64px); margin-bottom: 22px; }
+  .visit h2 em { font-style: italic; color: var(--terracotta); }
+  .visit p.lede { font-size: 18px; color: var(--espresso-soft); max-width: 420px; margin-bottom: 30px; }
+  .addr {
+    font-size: 16px;
+    color: var(--espresso);
+    line-height: 1.8;
+  }
+  .addr strong { font-weight: 600; }
+
+  .hours {
+    background: var(--paper);
+    border: 1px solid rgba(44, 28, 18, 0.10);
+    border-radius: 22px;
+    padding: 30px 32px;
+    box-shadow: 0 18px 44px rgba(44, 28, 18, 0.10);
+  }
+  .hours h4 {
+    font-family: "Fraunces", serif;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    margin-bottom: 18px;
+  }
+  .hours .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    font-size: 15px;
+    border-bottom: 1px dashed rgba(44, 28, 18, 0.16);
+  }
+  .hours .row:last-child { border-bottom: none; }
+  .hours .row span:first-child { color: var(--espresso-soft); }
+  .hours .row span:last-child { font-weight: 600; color: var(--espresso); }
+  .hours .row.now span:last-child { color: var(--terracotta-deep); }
+
+  footer {
+    margin-top: 84px;
+    border-top: 1px solid rgba(44, 28, 18, 0.14);
+    padding: 30px 0 40px;
+  }
+  footer .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer .logo { font-size: 20px; }
+  footer .social { display: flex; gap: 26px; font-size: 14px; font-weight: 500; }
+  footer .social a { color: var(--espresso-soft); transition: color 0.2s ease; }
+  footer .social a:hover { color: var(--terracotta); }
+  footer .copy { font-size: 13px; color: var(--espresso-soft); width: 100%; padding-top: 14px; }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(.2,.8,.2,1), transform 0.8s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: 0.08s; }
+  .reveal.d2 { transition-delay: 0.16s; }
+  .reveal.d3 { transition-delay: 0.24s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+    .hero-card { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo"><span class="dot"></span>RASIN</div>
+    <div class="nav-links">
+      <a class="link" href="#roasts">This week's roasts</a>
+      <a class="link" href="#story">Our story</a>
+      <a class="link" href="#visit">Visit the café</a>
+      <a class="btn" href="#roasts">Order beans <span class="arrow">→</span></a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow reveal"><span class="rule"></span>Single-origin · Roasted in Amman</span>
+        <h1 class="reveal d1">Coffee,<br>the <em>slow</em> way.</h1>
+        <p class="lede reveal d2">Small batches, roasted by hand in our Jabal Amman workshop. We chase clarity, sweetness, and the kind of cup worth slowing down for.</p>
+        <div class="hero-cta reveal d3">
+          <a class="btn" href="#roasts">Order beans <span class="arrow">→</span></a>
+          <a class="btn ghost" href="#visit">Find the café</a>
+        </div>
+        <div class="hero-meta reveal d3">
+          <div><div class="m-num">12</div><div class="m-lab">origins this season</div></div>
+          <div><div class="m-num">48h</div><div class="m-lab">rest, then we ship</div></div>
+          <div><div class="m-num">'19</div><div class="m-lab">roasting since</div></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal d2">
+        <div class="hero-card">
+          <img src="https://picsum.photos/seed/espresso/1600/1000" alt="A warm cup of freshly poured coffee" />
+          <div class="overlay"></div>
+          <div class="tag">Today's pour<small>Ethiopia · Guji · washed</small></div>
+        </div>
+        <div class="hero-badge">roasted<br>fresh<br>in amman</div>
+      </div>
+    </div>
+    <div class="steam"></div>
+  </header>
+
+  <!-- STORY -->
+  <section class="story" id="story">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow reveal"><span class="rule"></span>The Rasin way</span>
+        <h2 class="reveal d1">From a single farm<br>to your <em>kitchen counter</em>.</h2>
+      </div>
+      <div>
+        <p class="reveal d1">We buy whole lots from growers we know by name — never a faceless blend. Every bag is traceable back to one farm, one altitude, one harvest.</p>
+        <p class="reveal d2">Then we roast it gently, in batches small enough to taste twice a week. No rushing, no scorching. Just the bean, doing what it does best when you let it take its time.</p>
+        <div class="sig reveal d3">— Yara &amp; the Rasin roasting table</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROASTS -->
+  <section class="roasts" id="roasts">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="reveal">This week's <em>roasts</em></h2>
+        <p class="reveal d1">Three small batches, freshly turned. Whole bean or ground to order — your call.</p>
+      </div>
+      <div class="cards">
+
+        <div class="card reveal">
+          <div class="bean b1"><div class="cup">☕</div></div>
+          <div class="origin">Ethiopia · Guji</div>
+          <h3>Sunrise Lot</h3>
+          <div class="notes">
+            <span class="tnote">peach</span><span class="tnote">jasmine</span><span class="tnote">honey</span>
+            <br>Bright and floral, a washed Guji that drinks like late-summer fruit.
+          </div>
+          <div class="foot">
+            <div class="price">9.50 <small>JOD</small></div>
+            <a class="add" href="#">Add to bag →</a>
+          </div>
+        </div>
+
+        <div class="card reveal d1">
+          <div class="bean b2"><div class="cup">☕</div></div>
+          <div class="origin">Colombia · Huila</div>
+          <h3>Amber Hours</h3>
+          <div class="notes">
+            <span class="tnote">red apple</span><span class="tnote">caramel</span><span class="tnote">cocoa</span>
+            <br>Our cozy everyday cup — round, sweet, and forgiving in any brewer.
+          </div>
+          <div class="foot">
+            <div class="price">8.00 <small>JOD</small></div>
+            <a class="add" href="#">Add to bag →</a>
+          </div>
+        </div>
+
+        <div class="card reveal d2">
+          <div class="bean b3"><div class="cup">☕</div></div>
+          <div class="origin">Yemen · Haraz</div>
+          <h3>Deep Reserve</h3>
+          <div class="notes">
+            <span class="tnote">dark chocolate</span><span class="tnote">date</span><span class="tnote">spice</span>
+            <br>A rare natural from the Haraz mountains — bold, syrupy, unmistakably heritage.
+          </div>
+          <div class="foot">
+            <div class="price">14.00 <small>JOD</small></div>
+            <a class="add" href="#">Add to bag →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section class="visit" id="visit">
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <span class="eyebrow reveal"><span class="rule"></span>Come sit a while</span>
+          <h2 class="reveal d1">Visit the <em>café</em>.</h2>
+          <p class="lede reveal d2">Tucked off Rainbow Street, our little corner is built for slow mornings, good books, and one more cup. Pull up a stool by the roaster.</p>
+          <div class="addr reveal d2">
+            <strong>Rasin Coffee Roasters</strong><br>
+            14 Mango Street, Jabal Amman<br>
+            Amman, Jordan<br>
+            +962 6 000 0000
+          </div>
+        </div>
+        <div class="hours reveal d3">
+          <h4>Opening hours</h4>
+          <div class="row now"><span>Mon — Thu</span><span>7:30 — 22:00</span></div>
+          <div class="row"><span>Friday</span><span>1:00 pm — 23:00</span></div>
+          <div class="row"><span>Saturday</span><span>8:00 — 23:00</span></div>
+          <div class="row"><span>Sunday</span><span>8:00 — 21:00</span></div>
+          <div class="row"><span>Roastery tours</span><span>Sat, 11:00</span></div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="wrap">
+          <div class="logo"><span class="dot"></span>RASIN</div>
+          <div class="social">
+            <a href="#">Instagram</a>
+            <a href="#">Wholesale</a>
+            <a href="#">Subscriptions</a>
+            <a href="#">Contact</a>
+          </div>
+          <div class="copy">© 2026 Rasin Coffee Roasters · Roasted by hand in Amman · A Loom concept piece</div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var els = document.querySelectorAll(".reveal");
+      if (reduce || !("IntersectionObserver" in window)) {
+        els.forEach(function (el) { el.classList.add("in"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>

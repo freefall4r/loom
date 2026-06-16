@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATELIER NOOR — FW26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0a;
+    --paper:#f4f1ec;
+    --paper-2:#e8e4dc;
+    --accent:#9b2226; /* restrained oxblood */
+    --line:rgba(10,10,10,.18);
+    --pad:clamp(22px,4vw,72px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Archivo",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+
+  .display{font-family:"Bodoni Moda",serif;font-weight:700;line-height:.86;letter-spacing:-.01em}
+  .micro{font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:500}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px var(--pad);
+    backdrop-filter:saturate(1.2) blur(6px);
+    background:linear-gradient(to bottom,rgba(244,241,236,.92),rgba(244,241,236,0));
+    border-bottom:1px solid transparent;
+    transition:border-color .4s ease,background .4s ease;
+  }
+  nav.solid{background:var(--paper);border-bottom:1px solid var(--line)}
+  nav .logo{font-family:"Bodoni Moda",serif;font-weight:700;font-size:18px;letter-spacing:.18em}
+  nav .links{display:flex;gap:34px}
+  nav .links a{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;position:relative;opacity:.78;transition:opacity .25s}
+  nav .links a:hover{opacity:1}
+  nav .links a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--ink);transition:width .3s ease}
+  nav .links a:hover::after{width:100%}
+  nav .cart{display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+  nav .cart .dot{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:9px;letter-spacing:0}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;position:relative;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:var(--pad);padding-bottom:clamp(30px,4vh,54px);
+    background:var(--ink);color:var(--paper);
+    overflow:hidden;
+  }
+  .hero__bg{
+    position:absolute;inset:0;z-index:0;
+    background:url("https://picsum.photos/seed/noorhero/1600/2000") center/cover no-repeat;
+    filter:grayscale(1) contrast(1.08) brightness(.62);
+    transform:scale(1.04);
+  }
+  .hero__veil{position:absolute;inset:0;z-index:1;background:
+     linear-gradient(to top,rgba(10,10,10,.85),rgba(10,10,10,.15) 55%,rgba(10,10,10,.55));}
+  .hero__top{
+    position:absolute;top:96px;left:var(--pad);right:var(--pad);z-index:2;
+    display:flex;justify-content:space-between;color:rgba(244,241,236,.7);
+  }
+  .hero__inner{position:relative;z-index:2;width:100%}
+  .hero h1{
+    font-size:clamp(82px,21vw,310px);
+    margin-left:-.02em;
+  }
+  .hero h1 .em{font-style:italic;font-weight:400}
+  .hero h1 .fw{color:var(--accent)}
+  .hero__row{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    gap:40px;margin-top:clamp(20px,3vh,40px);flex-wrap:wrap;
+    border-top:1px solid rgba(244,241,236,.22);padding-top:22px;
+  }
+  .hero__statement{max-width:42ch;font-size:clamp(14px,1.15vw,17px);line-height:1.5;color:rgba(244,241,236,.82)}
+  .cta{display:inline-flex;align-items:center;gap:14px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+  .cta .bar{display:block;width:46px;height:1px;background:currentColor;transition:width .35s ease}
+  .cta:hover .bar{width:74px}
+
+  /* ---------- LOOKBOOK ---------- */
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding:clamp(56px,8vh,110px) var(--pad) 30px;gap:24px;flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(34px,5vw,64px)}
+  .section-head h2 .em{font-style:italic;font-weight:400}
+  .section-head .idx{color:var(--accent)}
+
+  .lookbook{
+    display:flex;gap:clamp(14px,1.6vw,26px);
+    padding:0 var(--pad) clamp(40px,6vh,80px);
+    overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+  }
+  .lookbook::-webkit-scrollbar{display:none}
+  .look{
+    position:relative;flex:0 0 clamp(260px,26vw,400px);
+    scroll-snap-align:start;
+  }
+  .look__img{position:relative;aspect-ratio:9/13;overflow:hidden;background:var(--paper-2)}
+  .look__img img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    filter:grayscale(1) contrast(1.05);
+    transition:transform 1.1s cubic-bezier(.16,.84,.34,1),filter .6s ease;
+  }
+  .look:hover .look__img img{transform:scale(1.06);filter:grayscale(1) contrast(1.12)}
+  .look--block .look__img{background:var(--ink);display:grid;place-items:center}
+  .look--block .look__num{font-family:"Bodoni Moda",serif;font-style:italic;font-size:clamp(60px,9vw,130px);color:var(--paper);opacity:.9}
+  .look--accent .look__img{background:var(--accent)}
+  .look__meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px}
+  .look__meta .t{font-family:"Bodoni Moda",serif;font-size:18px;letter-spacing:.01em}
+  .look__meta .p{font-size:11px;letter-spacing:.18em;opacity:.6}
+  .look__tag{position:absolute;top:14px;left:14px;z-index:2;background:var(--paper);color:var(--ink);padding:6px 11px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+  .look--block .look__tag,.look--accent .look__tag{background:var(--ink);color:var(--paper)}
+
+  /* ---------- EDITORIAL SPLIT ---------- */
+  .editorial{
+    display:grid;grid-template-columns:1.05fr 1fr;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .editorial__text{
+    padding:clamp(48px,8vw,120px) var(--pad);
+    display:flex;flex-direction:column;justify-content:center;gap:30px;
+  }
+  .editorial__text .kicker{color:var(--accent)}
+  .editorial__text h3{font-size:clamp(36px,4.4vw,72px);line-height:.96}
+  .editorial__text h3 .em{font-style:italic;font-weight:400}
+  .editorial__text p{max-width:46ch;font-size:15px;line-height:1.65;opacity:.8}
+  .editorial__img{position:relative;overflow:hidden;min-height:460px;background:var(--ink)}
+  .editorial__img img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:grayscale(1) contrast(1.05);
+    transition:transform 1.2s cubic-bezier(.16,.84,.34,1);
+  }
+  .editorial:hover .editorial__img img{transform:scale(1.05)}
+  .editorial__sig{position:absolute;bottom:26px;right:30px;z-index:2;font-family:"Bodoni Moda",serif;font-style:italic;font-size:26px;color:var(--paper);text-shadow:0 1px 20px rgba(0,0,0,.5)}
+
+  /* ---------- MANIFESTO BAND ---------- */
+  .band{padding:clamp(60px,11vh,150px) var(--pad);text-align:center}
+  .band p{font-family:"Bodoni Moda",serif;font-size:clamp(26px,3.6vw,56px);line-height:1.18;max-width:18ch;margin:0 auto;font-weight:400}
+  .band p .em{font-style:italic}
+  .band p .ac{color:var(--accent)}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:var(--paper);padding:clamp(54px,8vh,96px) var(--pad) 34px}
+  .foot__top{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:end;padding-bottom:clamp(40px,6vh,72px);border-bottom:1px solid rgba(244,241,236,.18)}
+  .foot__big{font-size:clamp(40px,7vw,120px);line-height:.9}
+  .foot__big .em{font-style:italic;font-weight:400}
+  .news label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;margin-bottom:16px}
+  .news__field{display:flex;align-items:center;gap:14px;border-bottom:1px solid rgba(244,241,236,.4);padding-bottom:12px}
+  .news__field input{flex:1;background:none;border:none;outline:none;color:var(--paper);font-family:"Archivo";font-size:16px;letter-spacing:.02em}
+  .news__field input::placeholder{color:rgba(244,241,236,.45)}
+  .news__field button{background:none;border:none;color:var(--paper);cursor:pointer;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;transition:opacity .25s}
+  .news__field button:hover{opacity:.6}
+  .foot__cols{display:flex;gap:80px;flex-wrap:wrap;padding-top:clamp(34px,5vh,56px)}
+  .foot__col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.55;margin-bottom:18px}
+  .foot__col a{display:block;font-size:13px;letter-spacing:.04em;opacity:.85;margin-bottom:11px;transition:opacity .2s}
+  .foot__col a:hover{opacity:1}
+  .foot__bottom{display:flex;justify-content:space-between;align-items:center;margin-top:clamp(40px,6vh,70px);flex-wrap:wrap;gap:16px;color:rgba(244,241,236,.5)}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s ease,transform 1s cubic-bezier(.16,.84,.34,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+  @media (max-width:860px){
+    nav .links{display:none}
+    .editorial{grid-template-columns:1fr}
+    .foot__top{grid-template-columns:1fr}
+    .hero__top{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="logo" href="#">ATELIER NOOR</a>
+  <div class="links">
+    <a href="#collection">Collection</a>
+    <a href="#atelier">Atelier</a>
+    <a href="#journal">Journal</a>
+    <a href="#stores">Amman</a>
+  </div>
+  <a class="cart" href="#">Shop <span class="dot">0</span></a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__veil" aria-hidden="true"></div>
+  <div class="hero__top micro">
+    <span>Est. Amman — 2026</span>
+    <span>Fall / Winter Collection</span>
+    <span>31.95° N</span>
+  </div>
+  <div class="hero__inner">
+    <h1 class="display reveal in">NOOR<span class="em"> — </span><span class="fw">FW26</span></h1>
+    <div class="hero__row">
+      <p class="hero__statement reveal d1">A study in shadow and structure. Twenty-two looks cut from raw wool, charred silk and unbleached linen — tailored for the modern Levant.</p>
+      <a class="cta" href="#collection">View the collection<span class="bar"></span></a>
+    </div>
+  </div>
+</header>
+
+<!-- LOOKBOOK -->
+<section id="collection">
+  <div class="section-head">
+    <h2 class="display reveal"><span class="idx">01 / </span>The <span class="em">Lookbook</span></h2>
+    <span class="micro reveal d1">Scroll →</span>
+  </div>
+  <div class="lookbook">
+    <article class="look reveal">
+      <div class="look__img"><span class="look__tag">Look 04</span><img src="https://picsum.photos/seed/noorone/900/1300" alt="Look 04"></div>
+      <div class="look__meta"><span class="t">Charcoal Suiting</span><span class="p">JOD 480</span></div>
+    </article>
+    <article class="look look--accent reveal d1">
+      <div class="look__img"><span class="look__tag">Look 09</span></div>
+      <div class="look__meta"><span class="t">Oxblood Cape</span><span class="p">JOD 620</span></div>
+    </article>
+    <article class="look reveal d2">
+      <div class="look__img"><span class="look__tag">Look 13</span><img src="https://picsum.photos/seed/noortwo/900/1300" alt="Look 13"></div>
+      <div class="look__meta"><span class="t">Raw Linen Set</span><span class="p">JOD 390</span></div>
+    </article>
+    <article class="look look--block reveal d3">
+      <div class="look__img"><span class="look__tag">Look 17</span><span class="look__num">XVII</span></div>
+      <div class="look__meta"><span class="t">The Atelier Coat</span><span class="p">JOD 740</span></div>
+    </article>
+    <article class="look reveal d4">
+      <div class="look__img"><span class="look__tag">Look 21</span><img src="https://picsum.photos/seed/noorthree/900/1300" alt="Look 21"></div>
+      <div class="look__meta"><span class="t">Charred Silk Gown</span><span class="p">JOD 690</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- EDITORIAL SPLIT -->
+<section id="atelier" class="editorial">
+  <div class="editorial__text">
+    <span class="micro kicker reveal">02 / The House</span>
+    <h3 class="display reveal d1">Clothes for the <span class="em">in-between</span> hours.</h3>
+    <p class="reveal d2">Atelier Noor was founded on a single conviction — that restraint is the loudest form of luxury. Each piece is cut by hand in a studio off Rainbow Street, drawn from the geometry of Amman's stone and the long blue dusk that falls over it.</p>
+    <p class="reveal d3">No seasons chased. No trends borrowed. Only garments built to outlive the year they were made in.</p>
+    <a class="cta reveal d3" href="#" style="color:var(--ink)">Read the manifesto<span class="bar"></span></a>
+  </div>
+  <div class="editorial__img reveal">
+    <img src="https://picsum.photos/seed/noorstudio/1100/1300" alt="Inside the atelier">
+    <span class="editorial__sig">— Noor.</span>
+  </div>
+</section>
+
+<!-- MANIFESTO BAND -->
+<section class="band">
+  <p class="reveal"><span class="em">Light</span>, made <span class="ac">wearable</span>. The collection arrives <span class="em">September</span>.</p>
+</section>
+
+<!-- FOOTER -->
+<footer id="stores">
+  <div class="foot__top">
+    <h2 class="foot__big display reveal">Join the <span class="em">list.</span></h2>
+    <form class="news reveal d1" onsubmit="return false">
+      <label>Be the first into the showroom</label>
+      <div class="news__field">
+        <input type="email" placeholder="your email address" aria-label="Email">
+        <button type="submit">Subscribe →</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="foot__cols">
+    <div class="foot__col">
+      <h4>Shop</h4>
+      <a href="#">FW26 Collection</a>
+      <a href="#">Tailoring</a>
+      <a href="#">Archive Sale</a>
+      <a href="#">Gift Cards</a>
+    </div>
+    <div class="foot__col">
+      <h4>House</h4>
+      <a href="#">The Atelier</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Journal</a>
+      <a href="#">Careers</a>
+    </div>
+    <div class="foot__col">
+      <h4>Visit</h4>
+      <a href="#">Rainbow Street, Amman</a>
+      <a href="#">Book an appointment</a>
+      <a href="#">Stockists</a>
+    </div>
+    <div class="foot__col">
+      <h4>Connect</h4>
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">Press</a>
+    </div>
+  </div>
+
+  <div class="foot__bottom micro">
+    <span>© 2026 Atelier Noor — Amman</span>
+    <span>Crafted in Jordan</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  var onScroll=function(){ nav.classList.toggle('solid', window.scrollY>40); };
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els=document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    els.forEach(function(e){e.classList.add('in')}); return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  },{threshold:.16,rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){ if(!e.classList.contains('in')) io.observe(e); });
+})();
+</script>
+</body>
+</html>

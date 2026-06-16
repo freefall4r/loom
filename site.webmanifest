@@ -1,0 +1,18 @@
+{
+  "name": "LOOM",
+  "short_name": "LOOM",
+  "description": "We weave technology — websites, apps & AI, woven by hand. A digital craft studio.",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "theme_color": "#F7F2E9",
+  "background_color": "#F7F2E9",
+  "icons": [
+    {
+      "src": "assets/img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

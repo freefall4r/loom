@@ -1,0 +1,1142 @@
+/* ============================================================================
+   LOOM — loom.css
+   Digital craft studio. "We weave technology."
+   Warm, editorial, handcrafted. Mobile-first. No frameworks.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   1. Design tokens  (exactly per SPEC §1)
+   ------------------------------------------------------------------------- */
+:root {
+  /* color tokens */
+  --paper:      #F7F2E9;  /* warm parchment background */
+  --paper-2:    #EFE7D8;  /* slightly deeper panel */
+  --ink:        #1C1814;  /* near-black warm text */
+  --ink-soft:   #4A423A;  /* secondary text */
+  --thread:     #C75B39;  /* terracotta — primary accent (warp) */
+  --thread-2:   #1F4E4A;  /* deep teal — secondary accent (weft) */
+  --gold:       #B8884B;  /* woven gold — small highlights */
+  --line:       #D8CDB9;  /* hairline borders on paper */
+  --paper-card: #FCF9F2;  /* raised card surface */
+  --shadow:     0 1px 2px rgba(28,24,20,.05), 0 8px 30px rgba(28,24,20,.07);
+
+  /* derived helpers (kept here so pages never need to invent values) */
+  --shadow-hover: 0 2px 4px rgba(28,24,20,.06), 0 18px 48px rgba(28,24,20,.12);
+  --maxw: 1180px;
+  --pad-x: clamp(1.25rem, 5vw, 4rem);
+  --pad-y: clamp(4rem, 9vw, 8rem);
+  --r-card: 14px;
+  --r-btn: 10px;
+  --r-pill: 999px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* ---------------------------------------------------------------------------
+   2. Reset & base
+   ------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--paper);
+  /* Subtle woven paper grain: two faint diagonal threads + a soft vignette.
+     Cheap, GPU-free, gives the parchment a handmade tooth. */
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(28, 24, 20, .013) 0,
+      rgba(28, 24, 20, .013) 1px,
+      transparent 1px,
+      transparent 7px),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(28, 24, 20, .013) 0,
+      rgba(28, 24, 20, .013) 1px,
+      transparent 1px,
+      transparent 7px),
+    radial-gradient(120% 90% at 50% -10%, rgba(184, 136, 75, .06), transparent 60%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img, svg, canvas { display: block; max-width: 100%; }
+img { height: auto; }
+
+a { color: var(--thread); text-decoration: none; transition: color .25s var(--ease); }
+a:hover { color: var(--thread-2); }
+
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 0 0 1.1em; padding-left: 1.2em; }
+
+hr { border: 0; height: 1px; background: var(--line); margin: 0; }
+
+::selection { background: var(--thread); color: var(--paper); }
+
+/* ---------------------------------------------------------------------------
+   3. Headings & type utilities
+   ------------------------------------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-optical-sizing: auto;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 .6em;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(2.6rem, 6vw, 5rem); font-weight: 500; }
+h2 { font-size: clamp(1.9rem, 3.5vw, 3rem); }
+h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); line-height: 1.2; letter-spacing: -0.005em; }
+h4 { font-size: 1.15rem; line-height: 1.3; }
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 1.04;
+  letter-spacing: -0.018em;
+  margin: 0 0 .4em;
+  text-wrap: balance;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--thread);
+  margin: 0 0 1.1rem;
+}
+/* tiny woven tick before an eyebrow */
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.6rem;
+  height: 1px;
+  margin-right: .7rem;
+  vertical-align: middle;
+  background: linear-gradient(90deg, var(--thread), var(--gold));
+}
+
+.lede {
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-weight: 400;
+  max-width: 56ch;
+}
+
+.muted { color: var(--ink-soft); }
+
+/* ---------------------------------------------------------------------------
+   4. Layout — .wrap / .section / .grid
+   ------------------------------------------------------------------------- */
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+
+.section {
+  padding-block: var(--pad-y);
+  position: relative;
+}
+/* hairline top rule between stacked sections, woven feel */
+.section + .section { border-top: 1px solid var(--line); }
+
+.section--ink {
+  background-color: var(--ink);
+  color: var(--paper);
+  border-top: 0;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(247, 242, 233, .018) 0,
+      rgba(247, 242, 233, .018) 1px,
+      transparent 1px,
+      transparent 8px),
+    radial-gradient(100% 80% at 50% 0%, rgba(199, 91, 57, .10), transparent 55%);
+}
+.section--ink h1, .section--ink h2, .section--ink h3, .section--ink h4 { color: var(--paper); }
+.section--ink .muted { color: rgba(247, 242, 233, .68); }
+.section--ink .lede { color: rgba(247, 242, 233, .8); }
+.section--ink a { color: var(--gold); }
+.section--ink a:hover { color: var(--thread); }
+.section--ink .thread-rule { opacity: .35; }
+
+.grid, .grid-2, .grid-3 { display: grid; gap: clamp(1rem, 2.5vw, 1.75rem); }
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+
+@media (min-width: 720px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---------------------------------------------------------------------------
+   5. Buttons — tactile, subtle hover lift
+   ------------------------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--paper-card);
+  --btn-fg: var(--ink);
+  --btn-bd: var(--line);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  font-family: var(--font-body);
+  font-size: .98rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .005em;
+  padding: .85rem 1.5rem;
+  border-radius: var(--r-btn);
+  border: 1px solid var(--btn-bd);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  cursor: pointer;
+  text-align: center;
+  transition: transform .22s var(--ease),
+              box-shadow .22s var(--ease),
+              background-color .22s var(--ease),
+              color .22s var(--ease),
+              border-color .22s var(--ease);
+  will-change: transform;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.btn:active { transform: translateY(0); box-shadow: var(--shadow); }
+
+.btn--primary {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+  --btn-bd: var(--ink);
+}
+.btn--primary:hover {
+  --btn-bg: #2a241e;
+  box-shadow: 0 10px 26px rgba(28, 24, 20, .28);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-bd: var(--line);
+}
+.btn--ghost:hover {
+  --btn-bd: var(--ink);
+  --btn-fg: var(--ink);
+  background: rgba(28, 24, 20, .03);
+}
+
+.btn--thread {
+  --btn-bg: var(--thread);
+  --btn-fg: #fff;
+  --btn-bd: var(--thread);
+}
+.btn--thread:hover {
+  --btn-bg: #b94e2f;
+  --btn-bd: #b94e2f;
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(199, 91, 57, .32);
+}
+
+/* On dark bands keep ghost buttons legible */
+.section--ink .btn--ghost {
+  --btn-fg: var(--paper);
+  --btn-bd: rgba(247, 242, 233, .28);
+}
+.section--ink .btn--ghost:hover {
+  --btn-bd: var(--paper);
+  background: rgba(247, 242, 233, .06);
+  color: var(--paper);
+}
+
+/* ---------------------------------------------------------------------------
+   6. Cards — paper-card, gentle hover raise
+   ------------------------------------------------------------------------- */
+.card {
+  position: relative;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: clamp(1.4rem, 3vw, 2.1rem);
+  box-shadow: var(--shadow);
+  transition: transform .3s var(--ease),
+              box-shadow .3s var(--ease),
+              border-color .3s var(--ease);
+}
+/* woven thread accent that grows along the top edge on hover */
+.card::after {
+  content: "";
+  position: absolute;
+  left: clamp(1.4rem, 3vw, 2.1rem);
+  top: -1px;
+  height: 2px;
+  width: 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--thread), var(--gold));
+  transition: width .45s var(--ease);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: #cdbfa3;
+}
+.card:hover::after { width: 2.4rem; }
+
+.card h3 { margin-bottom: .5rem; }
+.card > :last-child { margin-bottom: 0; }
+
+.section--ink .card {
+  background: #241f1a;
+  border-color: rgba(247, 242, 233, .12);
+  box-shadow: 0 1px 2px rgba(0,0,0,.2), 0 12px 36px rgba(0,0,0,.28);
+}
+.section--ink .card:hover { border-color: rgba(247, 242, 233, .24); }
+
+/* ---------------------------------------------------------------------------
+   7. Pills & tags
+   ------------------------------------------------------------------------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .8rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: .42rem .85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, .35);
+  white-space: nowrap;
+}
+.pill::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--thread);
+}
+.section--ink .pill {
+  color: rgba(247, 242, 233, .82);
+  border-color: rgba(247, 242, 233, .2);
+  background: rgba(247, 242, 233, .05);
+}
+
+/* ---------------------------------------------------------------------------
+   8. Thread rule — woven divider
+   ------------------------------------------------------------------------- */
+.thread-rule {
+  height: 1px;
+  border: 0;
+  margin: clamp(2rem, 5vw, 3.5rem) 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--line) 0,
+      var(--line) 7px,
+      transparent 7px,
+      transparent 11px),
+    repeating-linear-gradient(
+      90deg,
+      var(--thread) 0,
+      var(--thread) 2px,
+      transparent 2px,
+      transparent 26px);
+  background-position: 0 0, 4px 0;
+  opacity: .9;
+}
+
+/* ---------------------------------------------------------------------------
+   9. Navigation
+   ------------------------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(247, 242, 233, .82);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 68px;
+  padding-block: .6rem;
+}
+
+.nav__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: .04em;
+}
+.nav__logo span { line-height: 1; }
+.nav__logo img { width: 34px; height: 34px; }
+.nav__logo:hover { color: var(--ink); }
+.nav__logo:hover img { transform: rotate(-4deg); }
+.nav__logo img { transition: transform .4s var(--ease); }
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.4vw, 2rem);
+}
+.nav__links a:not(.nav__cta) {
+  position: relative;
+  color: var(--ink-soft);
+  font-weight: 500;
+  font-size: .98rem;
+  padding: .35rem 0;
+}
+.nav__links a:not(.nav__cta)::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: .05rem;
+  height: 1.5px;
+  background: var(--thread);
+  transition: right .3s var(--ease);
+}
+.nav__links a:not(.nav__cta):hover,
+.nav__links a[aria-current="page"] { color: var(--ink); }
+.nav__links a:not(.nav__cta):hover::after,
+.nav__links a[aria-current="page"]::after { right: 0; }
+
+.nav__cta { padding: .65rem 1.15rem; font-size: .92rem; }
+
+/* hamburger — hidden on desktop */
+.nav__toggle {
+  display: none;
+  width: 44px; height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-btn);
+  background: var(--paper-card);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: border-color .25s var(--ease), background .25s var(--ease);
+}
+.nav__toggle span {
+  display: block;
+  width: 19px; height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform .3s var(--ease), opacity .25s var(--ease);
+}
+.nav__toggle:hover { border-color: var(--ink); }
+.nav__toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav */
+@media (max-width: 859px) {
+  .nav__toggle { display: inline-flex; }
+  .nav__links {
+    position: absolute;
+    left: 0; right: 0; top: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: .5rem var(--pad-x) 1.4rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    /* collapsed state */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: max-height .4s var(--ease), opacity .3s var(--ease), transform .3s var(--ease);
+  }
+  .nav__links.open {
+    max-height: 70vh;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .nav__links a:not(.nav__cta) {
+    padding: .9rem .2rem;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__links a:not(.nav__cta)::after { display: none; }
+  .nav__cta { margin-top: 1.1rem; align-self: flex-start; }
+}
+
+/* ---------------------------------------------------------------------------
+   10. Hero (used by home; canvas + layered content)
+   ------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: .9;
+}
+/* gentle parchment fade so text stays legible over the weave */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 242, 233, .35) 0%,
+    rgba(247, 242, 233, .55) 55%,
+    var(--paper) 100%);
+}
+
+/* ---------------------------------------------------------------------------
+   11. Footer
+   ------------------------------------------------------------------------- */
+.footer { padding-block: clamp(3rem, 6vw, 5rem); }
+.footer__inner {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) {
+  .footer__inner { grid-template-columns: 1.4fr 1fr 1fr; align-items: start; }
+}
+
+.footer__brand { max-width: 34ch; }
+.footer__logo {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.6rem;
+  letter-spacing: .06em;
+  color: var(--paper);
+  margin-bottom: .7rem;
+}
+
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+.footer__nav a {
+  color: rgba(247, 242, 233, .78);
+  font-size: .98rem;
+  width: fit-content;
+}
+.footer__nav a:hover { color: var(--gold); }
+
+.footer__contact { display: flex; flex-direction: column; gap: .6rem; }
+.footer__contact a {
+  color: var(--gold);
+  font-weight: 500;
+  width: fit-content;
+}
+.footer__contact a:hover { color: var(--thread); }
+.footer__contact .muted { font-size: .9rem; margin: 0; }
+
+/* ---------------------------------------------------------------------------
+   12. Scroll reveal
+   ------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+/* small stagger helpers (optional for page agents) */
+.reveal[data-delay="1"] { transition-delay: .08s; }
+.reveal[data-delay="2"] { transition-delay: .16s; }
+.reveal[data-delay="3"] { transition-delay: .24s; }
+.reveal[data-delay="4"] { transition-delay: .32s; }
+
+/* ---------------------------------------------------------------------------
+   13. Focus states — visible, warm, accessible
+   ------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--thread);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.btn:focus-visible { outline-offset: 3px; }
+.nav__links a:focus-visible,
+.footer__nav a:focus-visible,
+.footer__contact a:focus-visible { outline-offset: 4px; }
+
+/* ---------------------------------------------------------------------------
+   14. Reduced motion
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  .nav__logo img { transition: none; }
+}
+
+/* ===========================================================================
+   15. PAGE COMPONENTS — Home (index.html)
+   =========================================================================== */
+
+/* Hero layout (base .hero defined in §10) */
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: min(88vh, 820px);
+  padding-block: clamp(4rem, 11vh, 8.5rem);
+}
+.hero__inner { position: relative; z-index: 1; }
+.hero__inner .display { margin-bottom: .35em; }
+.hero__inner .lede { margin-bottom: 2rem; max-width: 46ch; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-bottom: 1.5rem; }
+.hero__trust { font-size: .92rem; margin: 0; color: var(--ink-soft); }
+
+/* Positioning statement */
+.positioning { max-width: 62ch; margin-inline: auto; text-align: center; }
+.positioning__text {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.45rem, 3.2vw, 2.15rem);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 1.1rem;
+}
+.positioning__text em { font-style: italic; color: var(--thread); }
+.positioning__sign {
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--thread);
+  margin: 0;
+}
+
+/* Section headers & "more" links */
+.section__head { max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.section__head .lede { margin-top: .5rem; }
+.section__more { margin-top: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 0; }
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-weight: 600;
+  color: var(--thread);
+}
+.link-arrow:hover { color: var(--thread-2); gap: .7rem; }
+.link-arrow { transition: gap .25s var(--ease), color .25s var(--ease); }
+
+/* Icon chips inside cards */
+.card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1.1rem;
+  border-radius: 12px;
+  color: var(--thread);
+  background: linear-gradient(150deg, rgba(199,91,57,.12), rgba(184,136,75,.10));
+  border: 1px solid var(--line);
+}
+.card__icon svg { width: 1.5rem; height: 1.5rem; }
+
+/* Work teaser cards (anchor cards) */
+a.card--work { display: flex; flex-direction: column; color: inherit; }
+a.card--work:hover { color: inherit; }
+.card--work .eyebrow { color: var(--thread); margin-bottom: .8rem; }
+.card--work h3 { color: var(--ink); }
+.card--work .link-arrow { margin-top: 1.1rem; }
+
+/* Differentiator band */
+.differ {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 880px) { .differ { grid-template-columns: 1.25fr .9fr; } }
+.differ__copy > :last-child { margin-bottom: 0; }
+.differ__stats { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.differ__stats li {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: 1.05rem 1.25rem;
+  border: 1px solid rgba(247,242,233,.14);
+  border-radius: var(--r-card);
+  background: rgba(247,242,233,.03);
+}
+.differ__num { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; color: var(--gold); }
+.differ__lbl { font-size: .92rem; color: rgba(247,242,233,.68); }
+
+/* Soft band + process */
+.section--soft { background-color: var(--paper-2); }
+.process { list-style: none; padding: 0; margin: 0; }
+.process__step {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: var(--thread);
+  margin-bottom: .35rem;
+}
+
+/* Final CTA */
+.cta-final { max-width: 48ch; margin-inline: auto; text-align: center; }
+.cta-final .hero__cta { justify-content: center; margin-top: 1.8rem; margin-bottom: 0; }
+.section--ink .display { color: var(--paper); }
+
+/* ===========================================================================
+   16. PAGE COMPONENTS — Capabilities (services.html)
+   =========================================================================== */
+.cap-header { max-width: 64ch; }
+.cap { display: grid; gap: clamp(1.8rem, 4.5vw, 3.5rem); align-items: center; }
+.cap__text .eyebrow { margin-bottom: .85rem; }
+.cap__text > :last-child { margin-bottom: 0; }
+.cap__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  margin-bottom: 1.2rem;
+  border-radius: 14px;
+  color: var(--thread);
+  background: linear-gradient(150deg, rgba(199,91,57,.12), rgba(184,136,75,.10));
+  border: 1px solid var(--line);
+}
+.cap__icon svg { width: 1.9rem; height: 1.9rem; }
+.section--ink .cap__icon {
+  color: var(--gold);
+  background: rgba(247,242,233,.05);
+  border-color: rgba(247,242,233,.16);
+}
+
+/* Decorative woven visual panel */
+.cap__visual {
+  position: relative;
+  min-height: 260px;
+  border-radius: var(--r-card);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--paper-card);
+  box-shadow: var(--shadow);
+}
+.section--ink .cap__visual { border-color: rgba(247,242,233,.16); background: #241f1a; }
+.cap__weave {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(199,91,57,.16) 0 2px, transparent 2px 13px),
+    repeating-linear-gradient(-45deg, rgba(31,78,74,.15) 0 2px, transparent 2px 13px),
+    radial-gradient(120% 100% at 30% 20%, rgba(184,136,75,.14), transparent 60%);
+}
+.section--ink .cap__weave {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(199,91,57,.30) 0 2px, transparent 2px 13px),
+    repeating-linear-gradient(-45deg, rgba(184,136,75,.22) 0 2px, transparent 2px 13px),
+    radial-gradient(120% 100% at 30% 20%, rgba(199,91,57,.18), transparent 60%);
+}
+
+/* Deliverable pill rows */
+.pill-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.4rem; }
+
+/* Capabilities process + closing CTA */
+.cap-process { max-width: 60ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.cap-process__num {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: .35rem;
+}
+.cap-cta { max-width: 54ch; }
+.cap-cta__btns { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.6rem; }
+
+/* ===========================================================================
+   17. FORMS & DETAILS (about.html contact form + FAQ)
+   =========================================================================== */
+form label {
+  display: inline-block;
+  font-weight: 600;
+  font-size: .88rem;
+  letter-spacing: .02em;
+  margin-bottom: .4rem;
+  color: var(--ink);
+}
+form input, form select, form textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: .72rem .9rem;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+form input:focus, form select:focus, form textarea:focus {
+  outline: none;
+  border-color: var(--thread);
+  box-shadow: 0 0 0 3px rgba(199,91,57,.16);
+}
+form textarea { resize: vertical; min-height: 130px; }
+form p { margin-bottom: 1.1rem; }
+form p:last-child { margin-bottom: 0; }
+
+details.card { cursor: pointer; }
+details.card + details.card { margin-top: 1rem; }
+details.card summary {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  color: var(--ink);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+details.card summary::-webkit-details-marker { display: none; }
+details.card summary::after {
+  content: "+";
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--thread);
+  transition: transform .3s var(--ease);
+}
+details.card[open] summary::after { transform: rotate(45deg); }
+details.card p { margin: 1rem 0 0; color: var(--ink-soft); }
+.section--ink details.card summary { color: var(--paper); }
+.section--ink details.card summary::after { color: var(--gold); }
+.section--ink details.card p { color: rgba(247,242,233,.72); }
+
+/* ===========================================================================
+   18. DEPTH & 3D — hero scene, mockups, cursor-tilt, parallax, float
+   =========================================================================== */
+:root {
+  --shadow-3d: 0 38px 70px -28px rgba(28,24,20,.42), 0 16px 30px -16px rgba(28,24,20,.26);
+  --shadow-float: 0 30px 60px -24px rgba(28,24,20,.34);
+}
+
+/* --- Hero v2: copy left, 3D woven art right, ambient WebGL weave behind --- */
+.hero { position: relative; overflow: hidden; }
+.hero__three {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  opacity: .42;
+  pointer-events: none;
+}
+/* keep the headline crisp over the woven threads */
+.hero__copy { position: relative; }
+.hero__copy .display, .hero__copy .lede { text-shadow: 0 1px 0 rgba(247,242,233,.5); }
+.hero__inner { position: relative; z-index: 1; }
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hero__grid { grid-template-columns: 1.04fr .96fr; }
+}
+.hero__copy { max-width: 36ch; }
+.hero__copy .display { margin-bottom: .35em; }
+.hero__copy .lede { margin-bottom: 2rem; max-width: 40ch; }
+
+.hero__visual { perspective: 1200px; }
+.hero__art-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper-card);
+  box-shadow: var(--shadow-3d);
+  transform-style: preserve-3d;
+  aspect-ratio: 16 / 11;
+}
+.hero__art-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* a soft woven-gold sheen sweeping the art */
+.hero__art-frame::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 55%, rgba(184,136,75,.18) 80%, transparent 100%);
+}
+
+/* --- Cursor tilt --- */
+[data-tilt] {
+  transform: perspective(1100px) rotateX(0) rotateY(0);
+  transform-style: preserve-3d;
+  transition: transform .5s var(--ease);
+  will-change: transform;
+}
+[data-tilt]:hover { transition: transform .12s var(--ease); }
+[data-tilt-layer] { transition: transform .3s var(--ease); will-change: transform; }
+
+/* --- Scroll parallax --- */
+[data-parallax] { transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+
+/* --- Gentle float (decorative) --- */
+@keyframes loom-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+.float { animation: loom-float 7s ease-in-out infinite; }
+
+/* --- Device mockups (browser + phone) holding real screenshots --- */
+.scene { perspective: 1200px; }
+
+.mockup {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-3d);
+}
+.mockup__bar {
+  display: flex; align-items: center; gap: .45rem;
+  padding: .6rem .8rem;
+  background: linear-gradient(180deg, #fffdf8, var(--paper-2));
+  border-bottom: 1px solid var(--line);
+}
+.mockup__dot { width: 9px; height: 9px; border-radius: 50%; background: #d9cdb6; flex: none; }
+.mockup__dot:nth-child(1) { background: #e0795c; }
+.mockup__dot:nth-child(2) { background: #e3b765; }
+.mockup__dot:nth-child(3) { background: #8fb7a6; }
+.mockup__url {
+  margin-left: .6rem; flex: 1;
+  font-size: .72rem; color: var(--ink-soft);
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 999px; padding: .2rem .7rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 60%;
+}
+.mockup__img { display: block; width: 100%; height: auto; }
+
+.mockup--phone {
+  border: 9px solid #1b1714;
+  border-radius: 36px;
+  padding: 0; max-width: 270px;
+  margin-inline: auto;
+  position: relative;
+  background: #1b1714;
+}
+.mockup--phone .mockup__img { border-radius: 26px; }
+.mockup--phone::before {
+  content: ""; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 78px; height: 6px; border-radius: 99px;
+  background: rgba(247,242,233,.35); z-index: 2;
+}
+
+/* A stage that gives floating mockups breathing room + depth backdrop */
+.showpiece {
+  position: relative;
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 880px) { .showpiece { grid-template-columns: 1.1fr .9fr; } }
+.showpiece__media { position: relative; min-height: 1px; }
+.showpiece__copy > :last-child { margin-bottom: 0; }
+.showpiece__copy .pill-row { margin-bottom: 1.4rem; }
+.showpiece + .showpiece { margin-top: clamp(3rem, 7vw, 6rem); }
+.section__head + .showpiece { margin-top: clamp(1.5rem, 3vw, 2.5rem); }
+@media (min-width: 880px) {
+  .showpiece--flip .showpiece__media { order: 2; }
+  .showpiece--flip .showpiece__copy { order: 1; }
+}
+
+/* When a mockup sits in a tilt scene, layers can lift for depth */
+.lift-1 { transform: translateZ(20px); }
+.lift-2 { transform: translateZ(45px); }
+
+/* Reduced motion: kill tilt/parallax/float transforms & animation */
+@media (prefers-reduced-motion: reduce) {
+  [data-tilt], [data-parallax] { transform: none !important; }
+  .float { animation: none; }
+  .hero__three { opacity: .4; }
+}
+
+/* ===========================================================================
+   19. AR VIEWER · PRINTABLE MOCKUP · LOGO-REVEAL INTRO
+   =========================================================================== */
+
+/* --- <model-viewer> AR demo --- */
+.ar-viewer {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 100% at 50% 20%, #fffdf8 0%, var(--paper-2) 70%, #e7dcc8 100%);
+  box-shadow: var(--shadow-3d);
+  --poster-color: transparent;
+  cursor: grab;
+}
+.ar-viewer:active { cursor: grabbing; }
+.ar-btn {
+  position: absolute;
+  bottom: 16px; left: 50%; transform: translateX(-50%);
+  white-space: nowrap;
+}
+/* model-viewer's own progress bar tinted to brand */
+.ar-viewer::part(default-progress-bar) { background: var(--thread); }
+.ar-hint { margin-top: 1rem; font-size: .85rem; }
+
+/* --- Printable / paper mockup (Huroofi) --- */
+.paper-mock {
+  position: relative;
+  max-width: 360px;
+  margin-inline: auto;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-3d);
+}
+.paper-mock::before {            /* a second sheet peeking behind = a stack */
+  content: ""; position: absolute; inset: 0;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px;
+  transform: rotate(-3.5deg); z-index: -1;
+  box-shadow: var(--shadow-float);
+}
+.paper-mock__img { display: block; width: 100%; height: auto; border-radius: 4px; }
+
+/* --- Logo-reveal intro (plays once per session, skips on reduced-motion) --- */
+.intro {
+  position: fixed; inset: 0; z-index: 2000;
+  display: grid; place-items: center;
+  background: var(--paper);
+  transition: opacity .7s var(--ease), visibility .7s var(--ease);
+}
+.intro.is-done { opacity: 0; visibility: hidden; }
+.intro__mark { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+.intro svg { width: 96px; height: 96px; overflow: visible; }
+.intro__thread {
+  fill: none; stroke-width: 2.4; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: intro-draw .9s var(--ease) forwards;
+}
+.intro__thread.t1 { stroke: var(--thread);   animation-delay: .05s; }
+.intro__thread.t2 { stroke: var(--thread-2); animation-delay: .18s; }
+.intro__thread.t3 { stroke: var(--gold);     animation-delay: .31s; }
+.intro__thread.t4 { stroke: var(--thread);   animation-delay: .44s; }
+.intro__word {
+  font-family: var(--font-display); font-weight: 600; font-size: 2rem;
+  letter-spacing: .55em; opacity: 0; color: var(--ink);
+  padding-left: .55em;
+  animation: intro-word .8s var(--ease) .6s forwards;
+}
+@keyframes intro-draw { to { stroke-dashoffset: 0; } }
+@keyframes intro-word { to { opacity: 1; letter-spacing: .2em; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none; }
+}
+
+/* ============================================================================
+   CLEAN-MINIMAL REFINEMENT
+   Inspired by the LOOM client proposals (the Talal CRM one): more air,
+   fewer shadows, hairline structure, calmer surfaces, quieter labels.
+   Keeps the warm parchment palette and the 3D weave hero intact.
+   ========================================================================== */
+
+:root {
+  --pad-y: clamp(5rem, 11vw, 10rem);          /* more vertical breathing room */
+  --shadow: 0 1px 2px rgba(28,24,20,.04);      /* much softer baseline shadow */
+}
+
+/* Calmer parchment — drop the diagonal grain, keep only a faint warm glow. */
+body {
+  background-image: radial-gradient(120% 90% at 50% -12%, rgba(184,136,75,.05), transparent 62%);
+}
+.section--ink {
+  background-image: radial-gradient(100% 80% at 50% 0%, rgba(199,91,57,.08), transparent 60%);
+}
+
+/* More space between grid items. */
+.grid, .grid-2, .grid-3 { gap: clamp(1.5rem, 3vw, 2.5rem); }
+
+/* Quieter, more tracked labels — editorial restraint. */
+.eyebrow { font-size: .72rem; letter-spacing: .2em; margin-bottom: 1.3rem; }
+
+/* Roomier section heads. */
+.section__head { margin-bottom: clamp(2.6rem, 5vw, 4.25rem); }
+
+/* Flat, editorial cards: hairline structure instead of raised paper.
+   No drop shadow, no hover lift — calm and minimal. The thread accent stays. */
+.card {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 12px;
+  padding: clamp(1.6rem, 3vw, 2.35rem);
+}
+.card:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--ink);
+  background: rgba(255,255,255,.45);
+}
+.section--ink .card { background: transparent; box-shadow: none; }
+.section--ink .card:hover { background: rgba(247,242,233,.045); border-color: rgba(247,242,233,.32); }
+
+/* Quieter pills — outline only. */
+.pill { background: transparent; }
+
+/* Softer gallery cards (homepage / work) — let the screenshots carry it. */
+.gcard { box-shadow: 0 1px 2px rgba(28,24,20,.05); border-color: var(--line); }
+.gcard:hover { box-shadow: 0 18px 40px -24px rgba(28,24,20,.30); }
+

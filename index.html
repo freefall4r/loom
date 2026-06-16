@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOOM — We weave technology</title>
+  <meta name="description" content="A digital craft studio weaving websites, apps & AI by hand — premium work, shipped fast with AI agent teams.">
+  <meta name="theme-color" content="#F7F2E9">
+  <meta property="og:title" content="LOOM — We weave technology">
+  <meta property="og:description" content="Websites, apps & AI, woven by hand. A digital craft studio.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/loom.css">
+  <style>
+    /* ---- Work-led homepage: gallery of real sites & concepts ---- */
+    .home-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .home-head .lede { max-width: 44ch; margin: 0; }
+    .gallery { margin-top: clamp(2rem, 4vw, 3rem); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(.9rem, 1.6vw, 1.3rem); }
+    .gcard {
+      position: relative; display: block; overflow: hidden;
+      border-radius: 14px; box-shadow: var(--shadow);
+      border: 1px solid rgba(28,24,20,.06); background: var(--paper-card);
+      aspect-ratio: 16 / 10;
+    }
+    .gcard--wide { grid-column: span 2; aspect-ratio: 16 / 9; }
+    .gcard img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .85s cubic-bezier(.22,1,.36,1); }
+    .gcard:hover img { transform: scale(1.045); }
+    .gcard__meta {
+      position: absolute; inset-inline: 0; bottom: 0; z-index: 2;
+      padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: 2px;
+      background: linear-gradient(transparent, rgba(20,16,12,.82)); color: var(--paper);
+    }
+    .gcard__name { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: 1.12rem; line-height: 1.1; }
+    .gcard__tag { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(247,242,233,.82); }
+    .gcard__badge {
+      position: absolute; top: .8rem; inset-inline-start: .8rem; z-index: 2;
+      font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+      padding: .3em .7em; border-radius: 999px; background: rgba(247,242,233,.92); color: var(--ink);
+    }
+    .gcard__badge--live { background: var(--thread); color: var(--paper); }
+    .gallery-more { margin-top: clamp(1.6rem, 3vw, 2.4rem); text-align: center; }
+
+    /* ---- Compact "what we weave" strip ---- */
+    .weave-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem; margin-top: clamp(1.6rem, 3vw, 2.4rem); }
+    .weave-strip a {
+      text-decoration: none; color: var(--ink); font-weight: 500; font-size: .92rem;
+      padding: .6em 1.15em; border: 1px solid var(--line); border-radius: 999px;
+      transition: border-color .25s, background .25s, color .25s, transform .25s;
+    }
+    .weave-strip a:hover { border-color: var(--thread); background: var(--thread); color: var(--paper); transform: translateY(-2px); }
+
+    @media (max-width: 860px) { .gallery { grid-template-columns: 1fr 1fr; } .gcard--wide { grid-column: span 2; } }
+    @media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } .gcard--wide { grid-column: span 1; aspect-ratio: 16/10; } }
+  </style>
+</head>
+<body>
+
+<!-- Logo-reveal intro (plays once per session; skipped on reduced-motion) -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__mark">
+    <svg viewBox="0 0 60 60" fill="none" aria-hidden="true">
+      <path class="intro__thread t1" pathLength="1" d="M14 8 V52"/>
+      <path class="intro__thread t3" pathLength="1" d="M30 8 V52"/>
+      <path class="intro__thread t1" pathLength="1" d="M46 8 V52"/>
+      <path class="intro__thread t2" pathLength="1" d="M8 18 H52"/>
+      <path class="intro__thread t4" pathLength="1" d="M8 34 H52"/>
+      <path class="intro__thread t2" pathLength="1" d="M8 50 H52"/>
+    </svg>
+    <span class="intro__word">LOOM</span>
+  </div>
+</div>
+<script>
+  (function () {
+    var intro = document.getElementById('intro');
+    if (!intro) return;
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var seen = false;
+    try { seen = sessionStorage.getItem('loom_intro') === '1'; } catch (e) {}
+    if (rm || seen) { intro.parentNode.removeChild(intro); return; }
+    try { sessionStorage.setItem('loom_intro', '1'); } catch (e) {}
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(function () { intro.classList.add('is-done'); document.documentElement.style.overflow = ''; }, 2000);
+    intro.addEventListener('transitionend', function () { if (intro.parentNode) intro.parentNode.removeChild(intro); });
+  })();
+</script>
+
+<header class="nav">
+  <div class="nav__inner wrap">
+    <a class="nav__logo" href="index.html" aria-label="LOOM home">
+      <img src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span>LOOM</span>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html">Work</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">Studio</a>
+      <a class="btn btn--thread nav__cta" href="about.html#contact">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO (kept) ============ -->
+  <section class="hero">
+    <canvas id="loom-three" class="hero__three" aria-hidden="true"></canvas>
+    <div class="hero__inner wrap hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow reveal">Digital Craft Studio</p>
+        <h1 class="display reveal">We weave<br>technology.</h1>
+        <p class="lede reveal">Websites, apps &amp; AI — woven by hand.</p>
+        <div class="hero__cta reveal">
+          <a class="btn btn--thread" href="work.html">See our work</a>
+          <a class="btn btn--ghost" href="about.html#contact">Start a project</a>
+        </div>
+        <p class="hero__trust muted reveal">Trusted by real brands — and shipping with AI agent teams.</p>
+      </div>
+      <div class="hero__visual reveal" data-delay="2">
+        <div class="hero__art-frame" data-tilt data-tilt-max="8">
+          <img src="assets/img/hero-weave.jpg" alt="Abstract woven threads in terracotta, teal and gold — handcrafted digital fabric">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SELECTED WORK (gallery-led) ============ -->
+  <section class="section">
+    <div class="wrap">
+      <header class="home-head reveal">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2>Things we&rsquo;ve woven.</h2>
+        </div>
+        <p class="lede muted">Real builds and design concepts across industries — every thread placed
+          on purpose. Tap any to open it.</p>
+      </header>
+
+      <div class="gallery reveal">
+        <a class="gcard gcard--wide" href="https://www.plexusworkshop.com" target="_blank" rel="noopener">
+          <span class="gcard__badge gcard__badge--live">Live · Client</span>
+          <img src="assets/img/work/plexus.jpg" loading="lazy" alt="Plexus Workshop — a premium woodworking brand website">
+          <div class="gcard__meta"><span class="gcard__name">Plexus Workshop</span><span class="gcard__tag">Brand site · Next.js</span></div>
+        </a>
+        <a class="gcard" href="https://github.com/freefall4r/thegrove" target="_blank" rel="noopener">
+          <span class="gcard__badge gcard__badge--live">Featured</span>
+          <img src="assets/img/work/grove.jpg" loading="lazy" alt="The Grove — a bilingual furniture brand site with 3D, AR and a 360° showroom">
+          <div class="gcard__meta"><span class="gcard__name">The Grove</span><span class="gcard__tag">Furniture · 3D / AR</span></div>
+        </a>
+        <a class="gcard" href="concepts/zaytoun.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/zaytoun.jpg" loading="lazy" alt="Zaytoun — a Levantine fine-dining concept site">
+          <div class="gcard__meta"><span class="gcard__name">Zaytoun</span><span class="gcard__tag">Fine dining</span></div>
+        </a>
+        <a class="gcard" href="concepts/marwa.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/marwa.jpg" loading="lazy" alt="Marwa Residences — a luxury property concept site">
+          <div class="gcard__meta"><span class="gcard__name">Marwa Residences</span><span class="gcard__tag">Real estate</span></div>
+        </a>
+        <a class="gcard" href="concepts/forge.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/forge.jpg" loading="lazy" alt="Forge Athletic — a strength studio concept site">
+          <div class="gcard__meta"><span class="gcard__name">Forge Athletic</span><span class="gcard__tag">Fitness studio</span></div>
+        </a>
+        <a class="gcard" href="concepts/lumiere.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/lumiere.jpg" loading="lazy" alt="Lumière Clinic — an aesthetics clinic concept site">
+          <div class="gcard__meta"><span class="gcard__name">Lumière Clinic</span><span class="gcard__tag">Aesthetics clinic</span></div>
+        </a>
+        <a class="gcard" href="concepts/rasin.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/rasin.jpg" loading="lazy" alt="Rasin — a specialty coffee concept site">
+          <div class="gcard__meta"><span class="gcard__name">Rasin Coffee</span><span class="gcard__tag">Specialty coffee</span></div>
+        </a>
+        <a class="gcard gcard--wide" href="concepts/noor.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/noor.jpg" loading="lazy" alt="Atelier Noor — a high-fashion boutique concept site">
+          <div class="gcard__meta"><span class="gcard__name">Atelier Noor</span><span class="gcard__tag">Fashion boutique</span></div>
+        </a>
+      </div>
+
+      <p class="gallery-more reveal"><a class="btn btn--ghost" href="work.html">See all our work</a></p>
+    </div>
+  </section>
+
+  <!-- ============ WHAT WE WEAVE (compact strip) ============ -->
+  <section class="section section--soft">
+    <div class="wrap" style="text-align:center;">
+      <header class="section__head reveal">
+        <p class="eyebrow">What we weave</p>
+        <h2>One studio. Every thread.</h2>
+        <p class="lede" style="margin-inline:auto;">From the first marketing site to a fleet of agents running your operations — built by hand, shipped fast with AI agent teams.</p>
+      </header>
+      <nav class="weave-strip reveal" aria-label="Capabilities">
+        <a href="services.html">Websites</a>
+        <a href="services.html">Company Profiles</a>
+        <a href="services.html">Augmented Reality</a>
+        <a href="services.html">Mobile Apps</a>
+        <a href="services.html">CRM Systems</a>
+        <a href="services.html">Software Systems</a>
+        <a href="services.html">AI Agent Teams</a>
+        <a href="services.html">Brand &amp; Design</a>
+      </nav>
+      <p class="gallery-more reveal"><a class="link-arrow" href="services.html">Explore all capabilities &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA (kept) ============ -->
+  <section class="section section--ink">
+    <div class="wrap cta-final reveal">
+      <p class="eyebrow">Let&rsquo;s weave something</p>
+      <h2 class="display">Have a thread in mind?</h2>
+      <p class="lede">Tell us what you want to build. We&rsquo;ll bring the loom, the patience, and a fleet of weavers.</p>
+      <div class="hero__cta">
+        <a class="btn btn--thread" href="about.html#contact">Start a project</a>
+        <a class="btn btn--ghost" href="mailto:mofakhori@gmail.com">mofakhori@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer section--ink">
+  <div class="footer__inner wrap">
+    <div class="footer__brand">
+      <span class="footer__logo">LOOM</span>
+      <p class="muted">We weave technology — websites, apps &amp; AI, woven by hand.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html">Work</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">Studio</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="footer__contact">
+      <a href="mailto:mofakhori@gmail.com">mofakhori@gmail.com</a>
+      <p class="muted">© <span data-year>2026</span> LOOM. Crafted, not generated.</p>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/loom.js" defer></script>
+<script src="assets/js/loom-3d.js" defer></script>
+</body>
+</html>

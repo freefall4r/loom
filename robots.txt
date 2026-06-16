@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace freefall4r after creating the GitHub repo (see DEPLOY.md).
+Sitemap: https://freefall4r.github.io/loom/sitemap.xml

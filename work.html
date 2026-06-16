@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work — LOOM</title>
+  <meta name="description" content="Selected work from LOOM — real products and sites, hand-built: premium brand websites, an Arabic-first meditation app, automation engines, and AI agent teams.">
+  <meta name="theme-color" content="#F7F2E9">
+  <meta property="og:title" content="LOOM — We weave technology">
+  <meta property="og:description" content="Websites, apps & AI, woven by hand. A digital craft studio.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/loom.css">
+
+  <!-- Page-local styling for the case-study "visual" placeholders only.
+       Uses brand tokens from loom.css; no new global classes. -->
+  <style>
+    /* ---- Work page layout helpers ---- */
+    .work-head { text-align: center; }
+    .work-head .lede { margin-left: auto; margin-right: auto; max-width: 62ch; }
+
+    .case { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; margin-top: clamp(2.5rem, 6vw, 4.5rem); }
+    @media (min-width: 880px) {
+      .case { grid-template-columns: 1.05fr 1fr; }
+      .case--flip .case__visual { order: 2; }
+      .case--flip .case__body   { order: 1; }
+    }
+
+    .case__what { display: inline-block; margin: 0 0 .35rem; font-weight: 500; }
+    .case__story { color: var(--ink-soft); max-width: 56ch; }
+    .case__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0 1.25rem; }
+    .case__outcome {
+      margin: 0; padding-top: 1rem; border-top: 1px solid var(--line);
+      font-family: 'Fraunces', Georgia, serif; font-style: italic;
+      font-size: 1.1rem; line-height: 1.5; color: var(--ink);
+    }
+    .section--ink .case__story { color: rgba(247,242,233,.78); }
+    .section--ink .case__outcome { color: var(--paper); border-top-color: rgba(247,242,233,.18); }
+    .case__link {
+      display: inline-flex; align-items: center; gap: .45rem;
+      margin-top: 1.1rem; font-weight: 500; color: var(--thread);
+      text-decoration: none; border-bottom: 1px solid transparent;
+    }
+    .case__link:hover { border-bottom-color: var(--thread); }
+    .case__link svg { width: 15px; height: 15px; }
+
+    /* ---- Woven-thread visual placeholders (intentional, premium) ---- */
+    .visual {
+      position: relative; aspect-ratio: 4 / 3; border-radius: 14px;
+      overflow: hidden; box-shadow: var(--shadow);
+      border: 1px solid rgba(28,24,20,.06);
+      display: flex; align-items: flex-end; padding: clamp(1.25rem, 3vw, 2rem);
+    }
+    .visual svg.weave { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .visual__label {
+      position: relative; z-index: 2;
+      font-family: 'Fraunces', Georgia, serif; font-weight: 500;
+      line-height: 1.05; letter-spacing: -0.01em;
+      font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+      color: var(--paper);
+    }
+    .visual__label small {
+      display: block; margin-top: .5rem;
+      font-family: 'Inter', system-ui, sans-serif; font-weight: 500;
+      font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(247,242,233,.72);
+    }
+    .visual__ar { font-feature-settings: normal; }
+
+    /* per-project gradient grounds from the brand palette */
+    .visual--plexus { background: linear-gradient(135deg, #C75B39 0%, #8f3c23 100%); }
+    .visual--garden { background: linear-gradient(135deg, #1F4E4A 0%, #123330 100%); }
+    .visual--huroofi{ background: linear-gradient(135deg, #B8884B 0%, #8a5f2c 100%); }
+    .visual--grove  { background: linear-gradient(135deg, #2c5d3a 0%, #1c3d27 60%, #C75B39 160%); }
+    .visual--agents { background: linear-gradient(135deg, #1C1814 0%, #2a2017 55%, #C75B39 220%); }
+
+    /* approach strip */
+    .approach-grid { margin-top: clamp(2rem, 4vw, 3rem); }
+    .approach .card h3 { margin: 0 0 .5rem; }
+    .approach .card p { margin: 0; color: var(--ink-soft); }
+
+    .cta-close { text-align: center; }
+    .cta-close .lede { margin-left: auto; margin-right: auto; max-width: 48ch; }
+    .cta-close__btns { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin-top: 1.75rem; }
+
+    /* ---- Gallery of designs & concepts ---- */
+    .gallery {
+      margin-top: clamp(2rem, 4vw, 3rem);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: clamp(.9rem, 1.6vw, 1.3rem);
+    }
+    .gcard {
+      position: relative; display: block; overflow: hidden;
+      border-radius: 14px; box-shadow: var(--shadow);
+      border: 1px solid rgba(28,24,20,.06); background: var(--paper-card);
+      aspect-ratio: 16 / 10;
+    }
+    .gcard--wide { grid-column: span 2; aspect-ratio: 16 / 9; }
+    .gcard img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+      transition: transform .8s cubic-bezier(.22,1,.36,1);
+    }
+    .gcard:hover img { transform: scale(1.045); }
+    .gcard__meta {
+      position: absolute; inset-inline: 0; bottom: 0; z-index: 2;
+      padding: 1rem 1.15rem; display: flex; flex-direction: column; gap: 2px;
+      background: linear-gradient(transparent, rgba(20,16,12,.82));
+      color: var(--paper);
+    }
+    .gcard__name { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: 1.12rem; line-height: 1.1; }
+    .gcard__tag { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(247,242,233,.82); }
+    .gcard__badge {
+      position: absolute; top: .8rem; inset-inline-start: .8rem; z-index: 2;
+      font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+      padding: .3em .7em; border-radius: 999px;
+      background: rgba(247,242,233,.92); color: var(--ink);
+    }
+    .gcard__badge--live { background: var(--thread); color: var(--paper); }
+    @media (max-width: 860px) { .gallery { grid-template-columns: 1fr 1fr; } .gcard--wide { grid-column: span 2; } }
+    @media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } .gcard--wide { grid-column: span 1; aspect-ratio: 16/10; } }
+  </style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav__inner wrap">
+    <a class="nav__logo" href="index.html" aria-label="LOOM home">
+      <img src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span>LOOM</span>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html" aria-current="page">Work</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">Studio</a>
+      <a class="btn btn--thread nav__cta" href="about.html#contact">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ PAGE HEADER ============ -->
+  <section class="section">
+    <div class="wrap work-head reveal">
+      <p class="eyebrow">Selected work</p>
+      <h1 class="display">Things we&rsquo;ve woven</h1>
+      <p class="lede">Real products and sites, hand-built &mdash; from premium brand
+        websites to Arabic-first apps and automation engines. Every thread placed
+        on purpose. Nothing here was spun from a template.</p>
+    </div>
+  </section>
+
+  <!-- ============ CASE: PLEXUS WORKSHOP ============ -->
+  <section class="section">
+    <div class="wrap">
+      <article class="case reveal">
+        <div class="case__visual scene">
+          <div class="mockup" data-tilt data-tilt-max="9">
+            <div class="mockup__bar"><span class="mockup__dot"></span><span class="mockup__dot"></span><span class="mockup__dot"></span><span class="mockup__url">plexusworkshop.com</span></div>
+            <img class="mockup__img" src="assets/img/work/plexus.jpg" loading="lazy" alt="The Plexus Workshop website — a premium woodworking brand site">
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Brand website</p>
+          <h2>Plexus Workshop</h2>
+          <span class="case__what muted">A premium woodworking brand, brought online.</span>
+          <p class="case__story">We turned a real wood workshop into a recognized online
+            brand &mdash; a fast, bilingual-feeling site with custom product renders and a calm,
+            crafted feel that matches the work it sells. Built in Next.js and deployed on Vercel,
+            it&rsquo;s designed to win trust and pull in B2B leads, not just look pretty.</p>
+          <div class="case__tags">
+            <span class="pill">Next.js</span>
+            <span class="pill">Vercel</span>
+            <span class="pill">Custom product renders</span>
+            <span class="pill">Bilingual EN/AR</span>
+            <span class="pill">Brand &amp; design</span>
+          </div>
+          <p class="case__outcome">Workshop to web brand &mdash; a site built to attract clients,
+            not just exist.</p>
+          <a class="case__link" href="https://www.plexusworkshop.com" target="_blank" rel="noopener">
+            Visit plexusworkshop.com
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CASE: INNER GARDEN ============ -->
+  <section class="section section--ink">
+    <div class="wrap">
+      <article class="case case--flip reveal">
+        <div class="case__visual scene">
+          <div class="mockup mockup--phone float" data-tilt data-tilt-max="10">
+            <img class="mockup__img" src="assets/img/work/innergarden-mobile.jpg" loading="lazy" alt="Inner Garden — بُستان الرُّوح — an Arabic-first breathing and meditation app on a phone">
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Web app &middot; Arabic-first</p>
+          <h2>Inner Garden &middot; بُستان الرُّوح</h2>
+          <span class="case__what muted">An Arabic-first breathing &amp; meditation app.</span>
+          <p class="case__story">A calming, right-to-left (RTL) web app for breathing and
+            meditation &mdash; self-contained, fast, and gentle to use. We shaped a freemium
+            experience that feels rooted in Arabic culture rather than translated into it.
+            It shows our range: from hard utility to something quiet and emotional.</p>
+          <div class="case__tags">
+            <span class="pill">Arabic-first RTL</span>
+            <span class="pill">Calm UX</span>
+            <span class="pill">Freemium</span>
+            <span class="pill">Self-contained</span>
+            <span class="pill">Performance</span>
+          </div>
+          <p class="case__outcome">Proof that technology can feel like a deep breath, not a feed.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CASE: HUROOFI ============ -->
+  <section class="section">
+    <div class="wrap">
+      <article class="case reveal">
+        <div class="case__visual scene">
+          <div class="paper-mock" data-tilt data-tilt-max="9">
+            <img class="paper-mock__img" src="assets/img/work/huroofi.jpg" loading="lazy"
+                 alt="Huroofi — an Arabic 'Letters & Numbers' printable workbook produced by LOOM's automation engine">
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Automation &middot; productized system</p>
+          <h2>Huroofi</h2>
+          <span class="case__what muted">An Arabic educational printables &ldquo;factory.&rdquo;</span>
+          <p class="case__story">A Node engine driving headless Chrome to render beautiful
+            Arabic HTML into print-ready PDFs &mdash; at scale, on demand. The hard parts were
+            Arabic typography that stays correct and a pipeline that produces clean, repeatable
+            output every time. It&rsquo;s automation and craft in the same machine: a product that
+            makes more products.</p>
+          <div class="case__tags">
+            <span class="pill">Node.js</span>
+            <span class="pill">Headless Chrome</span>
+            <span class="pill">HTML&rarr;PDF pipeline</span>
+            <span class="pill">Arabic typography</span>
+            <span class="pill">Productized system</span>
+          </div>
+          <p class="case__outcome">One engine, endless print-ready pages &mdash; the kind of leverage we build for clients.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY: DESIGNS & CONCEPTS ============ -->
+  <section class="section section--ink">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center; max-width:60ch; margin-inline:auto;">
+        <p class="eyebrow">More from the loom</p>
+        <h2>Designs &amp; concepts</h2>
+        <p class="lede" style="margin-inline:auto;">From a bilingual build for an Amman furniture brand to original concept
+          studies across industries &mdash; different worlds, one standard of craft. Tap any to open it.</p>
+      </div>
+      <div class="gallery reveal">
+        <a class="gcard gcard--wide" href="https://github.com/freefall4r/thegrove" target="_blank" rel="noopener">
+          <span class="gcard__badge gcard__badge--live">Featured</span>
+          <img src="assets/img/work/grove.jpg" loading="lazy" alt="The Grove — a bilingual furniture brand site with 3D, AR and a 360° virtual showroom">
+          <div class="gcard__meta"><span class="gcard__name">The Grove</span><span class="gcard__tag">Furniture · Bilingual · 3D / AR</span></div>
+        </a>
+        <a class="gcard" href="concepts/zaytoun.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/zaytoun.jpg" loading="lazy" alt="Zaytoun — a Levantine fine-dining concept site">
+          <div class="gcard__meta"><span class="gcard__name">Zaytoun</span><span class="gcard__tag">Fine dining</span></div>
+        </a>
+        <a class="gcard" href="concepts/marwa.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/marwa.jpg" loading="lazy" alt="Marwa Residences — a luxury property concept site">
+          <div class="gcard__meta"><span class="gcard__name">Marwa Residences</span><span class="gcard__tag">Real estate</span></div>
+        </a>
+        <a class="gcard" href="concepts/forge.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/forge.jpg" loading="lazy" alt="Forge Athletic — a strength studio concept site">
+          <div class="gcard__meta"><span class="gcard__name">Forge Athletic</span><span class="gcard__tag">Fitness studio</span></div>
+        </a>
+        <a class="gcard" href="concepts/lumiere.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/lumiere.jpg" loading="lazy" alt="Lumière Clinic — an aesthetics clinic concept site">
+          <div class="gcard__meta"><span class="gcard__name">Lumière Clinic</span><span class="gcard__tag">Aesthetics clinic</span></div>
+        </a>
+        <a class="gcard" href="concepts/rasin.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/rasin.jpg" loading="lazy" alt="Rasin — a specialty coffee concept site">
+          <div class="gcard__meta"><span class="gcard__name">Rasin Coffee</span><span class="gcard__tag">Specialty coffee</span></div>
+        </a>
+        <a class="gcard gcard--wide" href="concepts/noor.html" target="_blank" rel="noopener">
+          <span class="gcard__badge">Concept</span>
+          <img src="assets/img/work/concepts/noor.jpg" loading="lazy" alt="Atelier Noor — a high-fashion boutique concept site">
+          <div class="gcard__meta"><span class="gcard__name">Atelier Noor</span><span class="gcard__tag">Fashion boutique</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASE: AI AGENT TEAMS (internal capability) ============ -->
+  <section class="section">
+    <div class="wrap">
+      <article class="case reveal">
+        <div class="case__visual scene">
+          <div class="visual visual--agents" data-tilt data-tilt-max="7">
+            <svg class="weave" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g stroke="rgba(199,91,57,.55)" stroke-width="1.3" fill="none">
+                <path d="M200 60 L110 150 M200 60 L290 150 M200 60 L200 150"/>
+                <path d="M110 150 L75 230 M110 150 L150 230 M290 150 L250 230 M290 150 L325 230 M200 150 L200 230"/>
+              </g>
+              <g fill="rgba(247,242,233,.85)">
+                <circle cx="200" cy="60" r="7"/>
+                <circle cx="110" cy="150" r="5"/><circle cx="200" cy="150" r="5"/><circle cx="290" cy="150" r="5"/>
+                <circle cx="75" cy="230" r="4"/><circle cx="150" cy="230" r="4"/><circle cx="200" cy="230" r="4"/><circle cx="250" cy="230" r="4"/><circle cx="325" cy="230" r="4"/>
+              </g>
+            </svg>
+            <span class="visual__label">AI Agent<br>Teams<small>The weavers behind the work</small></span>
+          </div>
+        </div>
+        <div class="case__body">
+          <p class="eyebrow">Internal capability</p>
+          <h2>AI Agent Teams</h2>
+          <span class="case__what muted">Orchestrated fleets of AI agents &mdash; our own edge.</span>
+          <p class="case__story">Loom builds with teams of AI agents working in parallel &mdash; our
+            &ldquo;weavers&rdquo; &mdash; researching, drafting, and assembling so we ship faster without
+            cutting corners. It&rsquo;s how this very site was woven. And it&rsquo;s the same capability
+            we deploy for clients: support bots, content engines, and ops automation that quietly do real work.</p>
+          <div class="case__tags">
+            <span class="pill">Agent orchestration</span>
+            <span class="pill">Parallel workflows</span>
+            <span class="pill">Support &amp; content bots</span>
+            <span class="pill">Ops automation</span>
+          </div>
+          <p class="case__outcome">We weave with AI &mdash; then hand-finish every thread.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PORTFOLIO TEASER ============ -->
+  <section class="section">
+    <div class="wrap reveal" style="text-align:center;">
+      <p class="eyebrow">The network behind the loom</p>
+      <h2>59 sites. The web&rsquo;s best hands.</h2>
+      <p class="lede" style="margin-inline:auto;max-width:60ch;">Beyond our own builds, we weave alongside
+        award-winning studios &mdash; Peach Worlds, Fiddle.Digital, Active Theory, Lusion, Immersive Garden
+        and more. Browse the full credited portfolio: every site, every maker named. The same hands we put
+        on your project.</p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
+        <a class="btn btn--thread" href="portfolio.html">Open the portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT CLIENTS GET ============ -->
+  <section class="section section--ink approach">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;">
+        <p class="eyebrow">What clients get</p>
+        <h2>Crafted, not generated</h2>
+        <p class="lede" style="margin-inline:auto;max-width:54ch;">
+          Every project above was built by hand with intent. Here&rsquo;s what that means in practice.</p>
+      </div>
+      <div class="grid grid-3 approach-grid reveal">
+        <div class="card">
+          <h3>Built to a brief, not a template</h3>
+          <p>No bloated themes or recycled layouts. We start from your goal and weave the
+            structure to fit it &mdash; so the result feels like you, not like everyone else.</p>
+        </div>
+        <div class="card">
+          <h3>Fast, accessible, bilingual-ready</h3>
+          <p>Clean code that loads quickly, works on every screen, reads well in English and
+            Arabic, and stays usable for everyone. Quality you can feel before you can name it.</p>
+        </div>
+        <div class="card">
+          <h3>AI-accelerated, hand-finished</h3>
+          <p>Our agent teams do the heavy lifting so we move fast &mdash; then a human checks every
+            detail. You get the speed of automation with the care of a workshop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING CTA ============ -->
+  <section class="section">
+    <div class="wrap cta-close reveal">
+      <p class="eyebrow">Your project next</p>
+      <h2>Have something to build?</h2>
+      <p class="lede">Tell us what you&rsquo;re making. We&rsquo;ll tell you honestly how we&rsquo;d
+        weave it &mdash; and whether we&rsquo;re the right studio for it.</p>
+      <div class="cta-close__btns">
+        <a class="btn btn--thread" href="about.html#contact">Start a project</a>
+        <a class="btn btn--ghost" href="mailto:mofakhori@gmail.com">mofakhori@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer section--ink">
+  <div class="footer__inner wrap">
+    <div class="footer__brand">
+      <span class="footer__logo">LOOM</span>
+      <p class="muted">We weave technology — websites, apps & AI, woven by hand.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html">Work</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">Studio</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="footer__contact">
+      <a href="mailto:mofakhori@gmail.com">mofakhori@gmail.com</a>
+      <p class="muted">© <span data-year>2026</span> LOOM. Crafted, not generated.</p>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/loom.js" defer></script>
+<script src="assets/js/loom-3d.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — LOOM</title>
+  <meta name="description" content="A living portfolio of 59 sites woven with our partner studios — Peach Worlds, Fiddle.Digital, Active Theory, Lusion and more. The same hands that built these can build yours.">
+  <meta name="theme-color" content="#F7F2E9">
+  <meta property="og:title" content="LOOM — Portfolio">
+  <meta property="og:description" content="59 sites woven with our partner studios. Every thread credited.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/loom.css">
+  <style>
+    .pf-head { text-align: center; }
+    .pf-head .lede { margin-inline: auto; max-width: 64ch; }
+    .pf-credit-note {
+      margin-inline: auto; margin-top: 1.25rem; max-width: 60ch;
+      font-size: .92rem; color: var(--ink-soft);
+      border-top: 1px solid var(--line); padding-top: 1.1rem;
+    }
+
+    /* filter bar */
+    .pf-filters {
+      display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center;
+      margin-top: clamp(1.75rem, 4vw, 2.75rem);
+    }
+    .pf-filter {
+      font: inherit; font-size: .82rem; font-weight: 500; cursor: pointer;
+      color: var(--ink-soft); background: var(--paper-card);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: .5em 1em; transition: all .25s ease;
+    }
+    .pf-filter span { opacity: .55; font-variant-numeric: tabular-nums; }
+    .pf-filter:hover { color: var(--ink); border-color: var(--ink-soft); }
+    .pf-filter.is-active { background: var(--thread); color: var(--paper); border-color: var(--thread); }
+    .pf-filter.is-active span { opacity: .8; }
+
+    /* grid */
+    .pf-grid {
+      margin-top: clamp(1.75rem, 4vw, 2.75rem);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1rem, 2vw, 1.6rem);
+    }
+    @media (max-width: 900px) { .pf-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 580px) { .pf-grid { grid-template-columns: 1fr; } }
+
+    .pf-card {
+      display: flex; flex-direction: column; text-decoration: none; color: inherit;
+      border-radius: 14px; overflow: hidden; background: var(--paper-card);
+      border: 1px solid rgba(28,24,20,.07); box-shadow: var(--shadow);
+      transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s ease;
+    }
+    .pf-card:hover { transform: translateY(-5px); box-shadow: 0 22px 48px -20px rgba(28,24,20,.34); }
+    .pf-card.is-hidden { display: none; }
+
+    .pf-card__shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #1c1814; }
+    .pf-card__shot img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+      transition: transform .9s cubic-bezier(.22,1,.36,1);
+    }
+    .pf-card:hover .pf-card__shot img { transform: scale(1.05); }
+    .pf-card__go {
+      position: absolute; top: .7rem; inset-inline-end: .7rem; z-index: 2;
+      width: 30px; height: 30px; display: grid; place-items: center;
+      border-radius: 50%; background: rgba(247,242,233,.92); color: var(--ink);
+      opacity: 0; transform: translateY(-4px); transition: all .35s ease;
+    }
+    .pf-card__go svg { width: 15px; height: 15px; }
+    .pf-card:hover .pf-card__go { opacity: 1; transform: translateY(0); }
+
+    .pf-card__meta { padding: .95rem 1.05rem 1.1rem; display: flex; flex-direction: column; gap: .3rem; }
+    .pf-card__top { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+    .pf-card__name { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: 1.12rem; line-height: 1.15; }
+    .pf-card__host { font-size: .68rem; color: var(--ink-soft); opacity: .7; white-space: nowrap; }
+    .pf-card__cat { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+    .pf-card__by { margin-top: .35rem; padding-top: .6rem; border-top: 1px solid var(--line); font-size: .82rem; color: var(--ink-soft); }
+    .pf-card__by strong { color: var(--thread); font-weight: 600; }
+
+    .pf-empty { text-align: center; color: var(--ink-soft); margin-top: 2rem; display: none; }
+  </style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav__inner wrap">
+    <a class="nav__logo" href="index.html" aria-label="LOOM home">
+      <img src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span>LOOM</span>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html">Work</a>
+      <a href="portfolio.html" aria-current="page">Portfolio</a>
+      <a href="about.html">Studio</a>
+      <a class="btn btn--thread nav__cta" href="about.html#contact">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="wrap pf-head reveal">
+      <p class="eyebrow">The portfolio</p>
+      <h1 class="display">Woven with the best hands on the web</h1>
+      <p class="lede">59 live sites — award-winning, 3D, immersive — built together with the
+        studios and makers we weave alongside. Each one is credited to its creators. These are the
+        same hands we put on your project.</p>
+      <p class="pf-credit-note">Every site below belongs to and was crafted by the studio named on its card.
+        We collaborate with these makers on client work — so the calibre you see here is the calibre
+        we can weave for you. Full credit, always.</p>
+      <div class="pf-filters reveal">
+      <button class="pf-filter is-active" data-filter="all">All</button>
+      <button class="pf-filter" data-filter="st-peach-worlds">Peach Worlds <span>24</span></button>
+      <button class="pf-filter" data-filter="st-fiddle-digital">Fiddle.Digital <span>8</span></button>
+      <button class="pf-filter" data-filter="st-60fps">60fps <span>2</span></button>
+      <button class="pf-filter" data-filter="st-active-theory">Active Theory <span>1</span></button>
+      <button class="pf-filter" data-filter="st-julian-garnier">Julian Garnier <span>1</span></button>
+      <button class="pf-filter" data-filter="st-lusion">Lusion <span>1</span></button>
+      <button class="pf-filter" data-filter="st-resn">Resn <span>1</span></button>
+      <button class="pf-filter" data-filter="st-herv-studio">Hervé Studio <span>1</span></button>
+      <button class="pf-filter" data-filter="st-immersive-garden">Immersive Garden <span>1</span></button>
+      <button class="pf-filter" data-filter="st-supercolor">Supercolor <span>1</span></button>
+      <button class="pf-filter" data-filter="st-lazarev-agency">Lazarev Agency <span>1</span></button>
+      <button class="pf-filter" data-filter="st-bws">BWS <span>1</span></button>
+      <button class="pf-filter" data-filter="st-adelt">Adelt <span>1</span></button>
+      <button class="pf-filter" data-filter="st-forged">Forged <span>1</span></button>
+      <button class="pf-filter" data-filter="st-altermind">Altermind <span>1</span></button>
+      <button class="pf-filter" data-filter="st-abeto-bureaux">abeto &amp; Bureaux <span>1</span></button>
+      <button class="pf-filter" data-filter="st-makemepulse">Makemepulse <span>1</span></button>
+      <button class="pf-filter" data-filter="st-mina-massoud">Mina Massoud <span>1</span></button>
+      <button class="pf-filter" data-filter="st-media-monks">Media.Monks <span>1</span></button>
+      <button class="pf-filter" data-filter="st-unseen-studio">Unseen Studio <span>1</span></button>
+      <button class="pf-filter" data-filter="st-shopify-design">Shopify Design <span>1</span></button>
+      <button class="pf-filter" data-filter="st-vide-infra">Vide Infra <span>1</span></button>
+      <button class="pf-filter" data-filter="st-rejouice">Rejouice <span>1</span></button>
+      <button class="pf-filter" data-filter="st-ryze-design-studio">Ryze Design Studio <span>1</span></button>
+      <button class="pf-filter" data-filter="st-firma">Firma <span>1</span></button>
+      <button class="pf-filter" data-filter="st-vertex3d">Vertex3D <span>1</span></button>
+      <button class="pf-filter" data-filter="st-wacus-global">Wacus Global <span>1</span></button>
+      <button class="pf-filter" data-filter="st-loom">LOOM <span>1</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="pf-grid" id="pfGrid">
+        <a class="pf-card reveal" href="https://anima.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/anima-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Anima — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Anima</span><span class="pf-card__host">anima.peachworlds.com</span></div>
+            <span class="pf-card__cat">Real-time 3D · Showcase</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://atom.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/atom-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Atom — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Atom</span><span class="pf-card__host">atom.peachworlds.com</span></div>
+            <span class="pf-card__cat">Real-time 3D · Showcase</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://bmw.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/bmw-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="BMW — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">BMW</span><span class="pf-card__host">bmw.peachworlds.com</span></div>
+            <span class="pf-card__cat">Automotive · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://chaumet.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/chaumet-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Chaumet — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Chaumet</span><span class="pf-card__host">chaumet.peachworlds.com</span></div>
+            <span class="pf-card__cat">Luxury · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://concept.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/concept-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Concept — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Concept</span><span class="pf-card__host">concept.peachworlds.com</span></div>
+            <span class="pf-card__cat">Real-time 3D · Showcase</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://drop.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/drop-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Drop — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Drop</span><span class="pf-card__host">drop.peachworlds.com</span></div>
+            <span class="pf-card__cat">Product · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://godzilla.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/godzilla-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Godzilla — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Godzilla</span><span class="pf-card__host">godzilla.peachworlds.com</span></div>
+            <span class="pf-card__cat">Entertainment · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://horizon.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/horizon-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Horizon — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Horizon</span><span class="pf-card__host">horizon.peachworlds.com</span></div>
+            <span class="pf-card__cat">Real-time 3D · Showcase</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://jordans.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/jordans-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Air Jordans — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Air Jordans</span><span class="pf-card__host">jordans.peachworlds.com</span></div>
+            <span class="pf-card__cat">Footwear · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://joyful-84thiv6s.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/joyful-84thiv6s-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Joyful — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Joyful</span><span class="pf-card__host">joyful-84thiv6s.peachworlds.com</span></div>
+            <span class="pf-card__cat">Brand · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://missionmars.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/missionmars-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Mission Mars — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Mission Mars</span><span class="pf-card__host">missionmars.peachworlds.com</span></div>
+            <span class="pf-card__cat">Space · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://mongols.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/mongols-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Mongols — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Mongols</span><span class="pf-card__host">mongols.peachworlds.com</span></div>
+            <span class="pf-card__cat">Story · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://nisa.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/nisa-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Nisa — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Nisa</span><span class="pf-card__host">nisa.peachworlds.com</span></div>
+            <span class="pf-card__cat">AI · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://noble-jmdbmzelm.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/noble-jmdbmzelm-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Noble — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Noble</span><span class="pf-card__host">noble-jmdbmzelm.peachworlds.com</span></div>
+            <span class="pf-card__cat">Brand · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://nova.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/nova-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Nova — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Nova</span><span class="pf-card__host">nova.peachworlds.com</span></div>
+            <span class="pf-card__cat">Real-time 3D · Showcase</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://porsche911.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/porsche911-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Porsche 911 — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Porsche 911</span><span class="pf-card__host">porsche911.peachworlds.com</span></div>
+            <span class="pf-card__cat">Automotive · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://rapid-whsj6gcz2.staging.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/rapid-whsj6gcz2-staging-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Rapid — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Rapid</span><span class="pf-card__host">rapid-whsj6gcz2.staging.peachworlds.com</span></div>
+            <span class="pf-card__cat">Brand · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://real-pr6mb6t5j4.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/real-pr6mb6t5j4-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Real — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Real</span><span class="pf-card__host">real-pr6mb6t5j4.peachworlds.com</span></div>
+            <span class="pf-card__cat">Real estate · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://surge.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/surge-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Surge — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Surge</span><span class="pf-card__host">surge.peachworlds.com</span></div>
+            <span class="pf-card__cat">Brand · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://tough-xvzmixkdx.peachworlds.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/tough-xvzmixkdx-peachworlds-com.jpg" loading="lazy" width="1000" height="625" alt="Tough — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Tough</span><span class="pf-card__host">tough-xvzmixkdx.peachworlds.com</span></div>
+            <span class="pf-card__cat">Brand · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://peachweb.io/gallery" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/peachweb-io-gallery.jpg" loading="lazy" width="1000" height="625" alt="PeachWeb Gallery — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">PeachWeb Gallery</span><span class="pf-card__host">peachweb.io</span></div>
+            <span class="pf-card__cat">Platform · Gallery</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://ascendmarketing.xyz/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/ascendmarketing-xyz.jpg" loading="lazy" width="1000" height="625" alt="Ascend Marketing — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Ascend Marketing</span><span class="pf-card__host">ascendmarketing.xyz</span></div>
+            <span class="pf-card__cat">Marketing · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="http://garrizmudze.com/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/garrizmudze-com.jpg" loading="lazy" width="1000" height="625" alt="Garriz Mudze — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Garriz Mudze</span><span class="pf-card__host">garrizmudze.com</span></div>
+            <span class="pf-card__cat">Portfolio · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://kokomo.games/" target="_blank" rel="noopener" data-studio="st-peach-worlds">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/kokomo-games.jpg" loading="lazy" width="1000" height="625" alt="Kokomo — site crafted by Peach Worlds">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Kokomo</span><span class="pf-card__host">kokomo.games</span></div>
+            <span class="pf-card__cat">Gaming · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Peach Worlds</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://fiddle.digital/" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/fiddle-digital.jpg" loading="lazy" width="1000" height="625" alt="Fiddle.Digital — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Fiddle.Digital</span><span class="pf-card__host">fiddle.digital</span></div>
+            <span class="pf-card__cat">Studio · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://fiddle.digital/work" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/fiddle-digital-work.jpg" loading="lazy" width="1000" height="625" alt="Fiddle.Digital — Work — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Fiddle.Digital — Work</span><span class="pf-card__host">fiddle.digital</span></div>
+            <span class="pf-card__cat">Studio · Showreel</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://string-tune.fiddle.digital/" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/string-tune-fiddle-digital.jpg" loading="lazy" width="1000" height="625" alt="String Tune — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">String Tune</span><span class="pf-card__host">string-tune.fiddle.digital</span></div>
+            <span class="pf-card__cat">Web effects · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://eyewearjunkie.com/" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/eyewearjunkie-com.jpg" loading="lazy" width="1000" height="625" alt="Eyewear Junkie — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Eyewear Junkie</span><span class="pf-card__host">eyewearjunkie.com</span></div>
+            <span class="pf-card__cat">E-commerce · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://obsidianassembly.com/" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/obsidianassembly-com.jpg" loading="lazy" width="1000" height="625" alt="Obsidian Assembly — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Obsidian Assembly</span><span class="pf-card__host">obsidianassembly.com</span></div>
+            <span class="pf-card__cat">Brand · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.dispatch.bike/" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/dispatch-bike.jpg" loading="lazy" width="1000" height="625" alt="Dispatch — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Dispatch</span><span class="pf-card__host">www.dispatch.bike</span></div>
+            <span class="pf-card__cat">E-bike · Product</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://wearekaleida.com/" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/wearekaleida-com.jpg" loading="lazy" width="1000" height="625" alt="Kaleida — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Kaleida</span><span class="pf-card__host">wearekaleida.com</span></div>
+            <span class="pf-card__cat">Agency · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://xe.works/" target="_blank" rel="noopener" data-studio="st-fiddle-digital">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/xe-works.jpg" loading="lazy" width="1000" height="625" alt="Xe — site crafted by Fiddle.Digital">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Xe</span><span class="pf-card__host">xe.works</span></div>
+            <span class="pf-card__cat">Studio · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Fiddle.Digital</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://60fps.fr/" target="_blank" rel="noopener" data-studio="st-60fps">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/60fps-fr.jpg" loading="lazy" width="1000" height="625" alt="60fps — site crafted by 60fps">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">60fps</span><span class="pf-card__host">60fps.fr</span></div>
+            <span class="pf-card__cat">Studio · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>60fps</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://configurator.endurosat.com/" target="_blank" rel="noopener" data-studio="st-60fps">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/configurator-endurosat-com.jpg" loading="lazy" width="1000" height="625" alt="EnduroSat Configurator — site crafted by 60fps">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">EnduroSat Configurator</span><span class="pf-card__host">configurator.endurosat.com</span></div>
+            <span class="pf-card__cat">Space · Configurator</span>
+            <span class="pf-card__by">Crafted by <strong>60fps</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://activetheory.net/" target="_blank" rel="noopener" data-studio="st-active-theory">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/activetheory-net.jpg" loading="lazy" width="1000" height="625" alt="Active Theory — site crafted by Active Theory">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Active Theory</span><span class="pf-card__host">activetheory.net</span></div>
+            <span class="pf-card__cat">Studio · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Active Theory</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://animejs.com/" target="_blank" rel="noopener" data-studio="st-julian-garnier">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/animejs-com.jpg" loading="lazy" width="1000" height="625" alt="Anime.js — site crafted by Julian Garnier">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Anime.js</span><span class="pf-card__host">animejs.com</span></div>
+            <span class="pf-card__cat">Open source · Motion</span>
+            <span class="pf-card__by">Crafted by <strong>Julian Garnier</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://oryzo.ai/" target="_blank" rel="noopener" data-studio="st-lusion">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/oryzo-ai.jpg" loading="lazy" width="1000" height="625" alt="Oryzo — site crafted by Lusion">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Oryzo</span><span class="pf-card__host">oryzo.ai</span></div>
+            <span class="pf-card__cat">AI · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Lusion</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://cornrevolution.resn.global/" target="_blank" rel="noopener" data-studio="st-resn">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/cornrevolution-resn-global.jpg" loading="lazy" width="1000" height="625" alt="Corn Revolution — site crafted by Resn">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Corn Revolution</span><span class="pf-card__host">cornrevolution.resn.global</span></div>
+            <span class="pf-card__cat">Campaign · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Resn</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://artprize-shadows.com/" target="_blank" rel="noopener" data-studio="st-herv-studio">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/artprize-shadows-com.jpg" loading="lazy" width="1000" height="625" alt="Richard Mille Art Prize — site crafted by Hervé Studio">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Richard Mille Art Prize</span><span class="pf-card__host">artprize-shadows.com</span></div>
+            <span class="pf-card__cat">Art &amp; culture · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Hervé Studio</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.cartier.com/en-fr/watchesandwonders" target="_blank" rel="noopener" data-studio="st-immersive-garden">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/cartier-com-en-fr-watchesandwonders.jpg" loading="lazy" width="1000" height="625" alt="Cartier — Watches &amp; Wonders — site crafted by Immersive Garden">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Cartier — Watches &amp; Wonders</span><span class="pf-card__host">www.cartier.com</span></div>
+            <span class="pf-card__cat">Luxury watches · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Immersive Garden</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.collabcapitolium.fr/" target="_blank" rel="noopener" data-studio="st-supercolor">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/collabcapitolium-fr.jpg" loading="lazy" width="1000" height="625" alt="TFC × Capitolium — site crafted by Supercolor">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">TFC × Capitolium</span><span class="pf-card__host">www.collabcapitolium.fr</span></div>
+            <span class="pf-card__cat">Sport &amp; fashion · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Supercolor</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://elvalabs.ai/" target="_blank" rel="noopener" data-studio="st-lazarev-agency">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/elvalabs-ai.jpg" loading="lazy" width="1000" height="625" alt="Elva Labs — site crafted by Lazarev Agency">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Elva Labs</span><span class="pf-card__host">elvalabs.ai</span></div>
+            <span class="pf-card__cat">AI · Product</span>
+            <span class="pf-card__by">Crafted by <strong>Lazarev Agency</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.emons.de/" target="_blank" rel="noopener" data-studio="st-bws">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/emons-de.jpg" loading="lazy" width="1000" height="625" alt="Emons — site crafted by BWS">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Emons</span><span class="pf-card__host">www.emons.de</span></div>
+            <span class="pf-card__cat">Logistics · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>BWS</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.farmminerals.com/" target="_blank" rel="noopener" data-studio="st-adelt">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/farmminerals-com.jpg" loading="lazy" width="1000" height="625" alt="Farm Minerals — site crafted by Adelt">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Farm Minerals</span><span class="pf-card__host">www.farmminerals.com</span></div>
+            <span class="pf-card__cat">Skincare · Brand</span>
+            <span class="pf-card__by">Crafted by <strong>Adelt</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://forged.build/" target="_blank" rel="noopener" data-studio="st-forged">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/forged-build.jpg" loading="lazy" width="1000" height="625" alt="Forged — site crafted by Forged">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Forged</span><span class="pf-card__host">forged.build</span></div>
+            <span class="pf-card__cat">Studio · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Forged</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://ibex-masters.com/" target="_blank" rel="noopener" data-studio="st-altermind">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/ibex-masters-com.jpg" loading="lazy" width="1000" height="625" alt="Ibex Masters — site crafted by Altermind">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Ibex Masters</span><span class="pf-card__host">ibex-masters.com</span></div>
+            <span class="pf-card__cat">Corporate · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Altermind</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.igloo.inc/" target="_blank" rel="noopener" data-studio="st-abeto-bureaux">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/igloo-inc.jpg" loading="lazy" width="1000" height="625" alt="Igloo Inc — site crafted by abeto &amp; Bureaux">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Igloo Inc</span><span class="pf-card__host">www.igloo.inc</span></div>
+            <span class="pf-card__cat">Web3 brand · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>abeto &amp; Bureaux</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.magische-spiegelungen.de/" target="_blank" rel="noopener" data-studio="st-makemepulse">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/magische-spiegelungen-de.jpg" loading="lazy" width="1000" height="625" alt="Magische Spiegelungen — site crafted by Makemepulse">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Magische Spiegelungen</span><span class="pf-card__host">www.magische-spiegelungen.de</span></div>
+            <span class="pf-card__cat">Museum WebXR · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Makemepulse</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://mina-massoud.com/" target="_blank" rel="noopener" data-studio="st-mina-massoud">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/mina-massoud-com.jpg" loading="lazy" width="1000" height="625" alt="Mina Massoud — site crafted by Mina Massoud">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Mina Massoud</span><span class="pf-card__host">mina-massoud.com</span></div>
+            <span class="pf-card__cat">Portfolio · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Mina Massoud</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://persepolis.getty.edu/" target="_blank" rel="noopener" data-studio="st-media-monks">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/persepolis-getty-edu.jpg" loading="lazy" width="1000" height="625" alt="Persepolis Reimagined — site crafted by Media.Monks">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Persepolis Reimagined</span><span class="pf-card__host">persepolis.getty.edu</span></div>
+            <span class="pf-card__cat">Cultural · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Media.Monks</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://poly.app/" target="_blank" rel="noopener" data-studio="st-unseen-studio">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/poly-app.jpg" loading="lazy" width="1000" height="625" alt="Poly — site crafted by Unseen Studio">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Poly</span><span class="pf-card__host">poly.app</span></div>
+            <span class="pf-card__cat">AI SaaS · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Unseen Studio</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.shopify.com/editions/winter2026" target="_blank" rel="noopener" data-studio="st-shopify-design">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/shopify-com-editions-winter2026.jpg" loading="lazy" width="1000" height="625" alt="Shopify Editions — Winter 2026 — site crafted by Shopify Design">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Shopify Editions — Winter 2026</span><span class="pf-card__host">www.shopify.com</span></div>
+            <span class="pf-card__cat">Product launch · Scroll</span>
+            <span class="pf-card__by">Crafted by <strong>Shopify Design</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://springs.estate/" target="_blank" rel="noopener" data-studio="st-vide-infra">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/springs-estate.jpg" loading="lazy" width="1000" height="625" alt="Springs Estate — site crafted by Vide Infra">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Springs Estate</span><span class="pf-card__host">springs.estate</span></div>
+            <span class="pf-card__cat">Real estate · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Vide Infra</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://terminal-industries.com/" target="_blank" rel="noopener" data-studio="st-rejouice">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/terminal-industries-com.jpg" loading="lazy" width="1000" height="625" alt="Terminal Industries — site crafted by Rejouice">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Terminal Industries</span><span class="pf-card__host">terminal-industries.com</span></div>
+            <span class="pf-card__cat">Logistics tech · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Rejouice</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://tidescape.framer.ai/" target="_blank" rel="noopener" data-studio="st-ryze-design-studio">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/tidescape-framer-ai.jpg" loading="lazy" width="1000" height="625" alt="Tidescape — site crafted by Ryze Design Studio">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Tidescape</span><span class="pf-card__host">tidescape.framer.ai</span></div>
+            <span class="pf-card__cat">Hospitality · Framer</span>
+            <span class="pf-card__by">Crafted by <strong>Ryze Design Studio</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://toptier.relats.com/" target="_blank" rel="noopener" data-studio="st-firma">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/toptier-relats-com.jpg" loading="lazy" width="1000" height="625" alt="Relats TopTier — site crafted by Firma">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Relats TopTier</span><span class="pf-card__host">toptier.relats.com</span></div>
+            <span class="pf-card__cat">Industrial · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>Firma</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.vertex3d.asia/" target="_blank" rel="noopener" data-studio="st-vertex3d">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/vertex3d-asia.jpg" loading="lazy" width="1000" height="625" alt="Vertex3D — site crafted by Vertex3D">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Vertex3D</span><span class="pf-card__host">www.vertex3d.asia</span></div>
+            <span class="pf-card__cat">Studio · WebGL</span>
+            <span class="pf-card__by">Crafted by <strong>Vertex3D</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://wacusglobal.com/en" target="_blank" rel="noopener" data-studio="st-wacus-global">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/wacusglobal-com-en.jpg" loading="lazy" width="1000" height="625" alt="Wacus Global — site crafted by Wacus Global">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">Wacus Global</span><span class="pf-card__host">wacusglobal.com</span></div>
+            <span class="pf-card__cat">Agency · Web design</span>
+            <span class="pf-card__by">Crafted by <strong>Wacus Global</strong></span>
+          </div>
+        </a>
+        <a class="pf-card reveal" href="https://www.jdco.website/" target="_blank" rel="noopener" data-studio="st-loom">
+          <div class="pf-card__shot">
+            <img src="assets/img/portfolio/jdco-website.jpg" loading="lazy" width="1000" height="625" alt="JDCO — site crafted by LOOM">
+            <span class="pf-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="pf-card__meta">
+            <div class="pf-card__top"><span class="pf-card__name">JDCO</span><span class="pf-card__host">www.jdco.website</span></div>
+            <span class="pf-card__cat">Industrial B2B · 3D</span>
+            <span class="pf-card__by">Crafted by <strong>LOOM</strong></span>
+          </div>
+        </a>
+      </div>
+      <p class="pf-empty" id="pfEmpty">No projects in this collection yet.</p>
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="wrap cta-close reveal" style="text-align:center;">
+      <p class="eyebrow">Your project next</p>
+      <h2>Want one of these for your brand?</h2>
+      <p class="lede" style="margin-inline:auto;max-width:48ch;">Point at any site above. We&rsquo;ll weave
+        you something in that league — with the very studio that made it.</p>
+      <div class="cta-close__btns" style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.75rem;">
+        <a class="btn btn--thread" href="about.html#contact">Start a project</a>
+        <a class="btn btn--ghost" href="work.html">See our own work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer section--ink">
+  <div class="footer__inner wrap">
+    <div class="footer__brand">
+      <span class="footer__logo">LOOM</span>
+      <p class="muted">We weave technology — websites, apps &amp; AI, woven by hand.</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="services.html">Capabilities</a>
+      <a href="work.html">Work</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">Studio</a>
+      <a href="about.html#contact">Contact</a>
+    </nav>
+    <div class="footer__contact">
+      <a href="mailto:mofakhori@gmail.com">mofakhori@gmail.com</a>
+      <p class="muted">© <span data-year>2026</span> LOOM. Crafted, not generated.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/loom.js" defer></script>
+<script>
+  // Portfolio studio filter
+  (function () {
+    var grid = document.getElementById('pfGrid');
+    if (!grid) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.pf-card'));
+    var empty = document.getElementById('pfEmpty');
+    document.querySelectorAll('.pf-filter').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.pf-filter').forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var f = btn.getAttribute('data-filter');
+        var shown = 0;
+        cards.forEach(function (c) {
+          var match = f === 'all' || c.getAttribute('data-studio') === f;
+          c.classList.toggle('is-hidden', !match);
+          if (match) shown++;
+        });
+        if (empty) empty.style.display = shown ? 'none' : 'block';
+      });
+    });
+  })();
+</script>
+</body>
+</html>

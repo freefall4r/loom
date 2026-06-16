@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34" role="img" aria-label="LOOM">
+  <title>LOOM</title>
+  <!-- Abstract woven 'L': a teal weft passes over/under a terracotta warp.
+       Round caps + over/under crossings read as a single thread on a loom. -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- warp: vertical terracotta thread forming the stem of the L -->
+    <path d="M11 5 V24" stroke="#C75B39" stroke-width="3.4"/>
+    <!-- weft: teal thread forming the foot of the L, woven across the warp -->
+    <path d="M8 26 H27" stroke="#1F4E4A" stroke-width="3.4"/>
+    <!-- crossing warp strand that goes OVER the foot (over/under weave) -->
+    <path d="M19 9 V29" stroke="#C75B39" stroke-width="3.4" opacity=".9"/>
+    <!-- short teal cross-thread OVER the first warp near the top -->
+    <path d="M6 12 H16" stroke="#1F4E4A" stroke-width="3.4" opacity=".9"/>
+  </g>
+  <!-- gold knots where threads interlock -->
+  <g fill="#B8884B">
+    <circle cx="11" cy="12" r="1.7"/>
+    <circle cx="19" cy="26" r="1.7"/>
+  </g>
+</svg>
